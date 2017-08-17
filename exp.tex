@@ -1,6 +1,9 @@
 To evaluate the effectiveness of TRANP-CNN, we conduct experiments on open source software projects and compare it with several state-of-the-art bug localization methods.
 
 \subsection{Research Questions}
+
+\dl{Ferdian, please add details on why the RQs are interesting and the purpose of the RQs}
+
 Our experiments are designed to address the following research questions:
 
 \textit{\textbf{RQ1}: Is there a need for cross-project bug localization?}
@@ -9,13 +12,20 @@ Our experiments are designed to address the following research questions:
 
 \textit{\textbf{RQ3}: Can TRANP-CNN outperform other bug localization methods?}
 
-\subsection{Data Sets}
-The data sets are presented here.
+\subsection{Datasets}
+The datasets are presented here.
+
+\dl{Ferdian, please add details datasets. Please see the following papers for details of the datasets:~\cite{huo2016learning,KochharTL14}.}
+
 
 \subsection{Evaluation Metrics}
 The evaluation metrics are presented here.
 
-\subsection{Compared Methods}
+\dl{Ferdian, please add details on evaluation metrics.}
+
+
+\subsection{Baselines}
+
 We compare our proposed model TRANP-CNN with following baseline methods:
 \begin{itemize}
   \item VSM (Vector Space Model)~\cite{rao2011retrieval}: a baseline method that firstly uses Vector Space Model to represent the text bug reports and source code, then employs Logistic Regression to predict the related buggy source code.
@@ -28,6 +38,7 @@ We compare our proposed model TRANP-CNN with following baseline methods:
 \end{itemize}
 
 \subsection{Experimental Settings}
+
 For parameter settings of baseline methods, we use the same parameter settings suggested in their work~\cite{rao2011retrieval}. For the TRANP-CNN model, we employ the most commonly used ReLU $\sigma(x)=\max(0,x)$ as active function and the filter windows size $d$ is set as 3, 4, 5, with 100 feature maps each in Within-Project feature extraction layers. The number of neurons in fully-connect network in  set the same number of CNN. In addition, the drop-out method is also applied which is used to prevent co-adaption of hidden units by randomly dropping out values in fully-connected layers, and the drop-out probability $p$ is set 0.25 in our experiments.
 
 For data partition, we use data from source projects and 20\% target projects as training sets, and locates the 80\% buggy code in target projects. This process repeats for 5 times to reduce the influence of randomness, and we report the average results in the next section.
