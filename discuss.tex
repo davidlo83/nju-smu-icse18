@@ -1,4 +1,9 @@
-\subsection{Why do the cross-project feature fusion layers work? }
+\subsection{Why do the heterogeneous prediction adaptation layers work? }
+Firstly, we explore the reason why the heterogeneous prediction adaptation layers work in the TRANP-CNN model. The key part of TRANP-CNN is the heterogeneous prediction adaptation layers, and in this section, we discuss why the proposed heterogeneous prediction adaptation layers work. 
+
+The only differences between NP-CNN and TRANP-CNN is that the TRANP-CNN applies heterogeneous prediction adaptation layers, which is particularly designed for cross-project bug localization performance. This is because the distribution of data from source project and target project may be different, leading to a bias results if the prediction structure is the same. The TRANP-CNN model employs two fully-connected network for prediction, one is for source project and the other one is for target project. During training process, the source project data are trained using the feature extraction part CNN and fully-connected network $fc_s$, and the target project data are trained using the same CNN and fully-connected network $fc_t$. This process helps improve the bug localization performance from target project by enjoying the advantage in sharing the same network extracting high-level semantic features from source project, and meanwhile adapting prediction network using training data from target project. 
+
+From the experiments results, we still find that SimpleTrans outperforms NP-CNN in terms of most evaluation metrics. SimpleTrans has the same structure with NP-CNN, but fine tune the parameters of fully-connected network using target project data, which suggests that using target project to train the fully-connected network for prediction is effective for bug localization. TRANP-CNN uses two fully-connected networks for source project and target project that further improves the bug localization performance. 
 
 \subsection{Why does TRANP-CNN improve the bug localization performance?}
 
