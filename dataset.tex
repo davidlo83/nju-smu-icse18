@@ -1,4 +1,18 @@
-The datasets are presented here.
+We consider three datasets containing a total of 5,591 reports from JIRA issue tracking systems of HTTPClient (H)\footnote{\url{http://hc.apache.org/httpcomponents-client-ga/index.html}}, Jackrabbit (J)\footnote{\url{https://jackrabbit.apache.org/jcr/index.html}}, and Lucene-Java (L)\footnote{\url{ http://lucene.apache.org/}}. HTTPClient is a library for implementing the client side of HTTP standard, while Jackrabbit is a content repository, and Lucene is a text search engine. We only consider projects with JIRA issue tracking systems since links between bug reports and their bug fixing commits stored in them are typically more reliable than those stored in Bugzilla issue tracking systems -- c.f.,~\cite{BissyandeTWLJR13}. The details of the reports considered in this study are shown in Table~\ref{tab:reports} and they have been used before by Kochhar et al.~\cite{KochharTL14}. 
 
-\dl{Ferdian, please add details datasets. Please see the following papers for details of the datasets:~\cite{huo2016learning,KochharTL14}.}
+\begin{table}
+\caption{Bug Report Dataset}\label{tab:reports}
+\begin{tabular}{|l|l|l}
+\hline
+{\bf Project} & {\bf \# Reports} \\
+\hline HTTPClient & 746\\
+\hline Jackrabbit & 2,402\\
+\hline Lucene-Java & 2,443\\
+\hline
+\end{tabular}
+\end{table}
+
+\dl{Xuan, I thought we are also using your previous datasets? If we only use Pavneet's dataset, do we use all of them or only some of them that are not biased? Pavneet showed that some of the dataset is biased ... reviewers may be concerned with this bias ... Bias 2 mentioned in this paper (\url{http://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=3425&context=sis_research}) is particularly important.}
+
+%\dl{Ferdian, please add details datasets. Please see the following papers for details of the datasets:~\cite{huo2016learning,KochharTL14}.}
 
