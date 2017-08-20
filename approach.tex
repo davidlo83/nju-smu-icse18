@@ -1,3 +1,11 @@
+\begin{figure*}[hbt]
+\centering
+\includegraphics[width = 2\columnwidth]{pic/structure.pdf}
+\caption{The overall structure of Transfer Natural and Programming language CNN.  The left part is the training process of TRANP-CNN based on the bug reports and source code from source projects and a few data from target projects, the weights of which are trained by minimizing the loss of ensemble loss from fully-connected networks $fc_s$ and $fc_t$. The right part is the testing process, a new bug report and its candidate source code are fed into the model, and TRANP-CNN outputs their relevant scores for bug localization.}
+\label{fig:structure}
+\end{figure*}
+
+
 The goal of cross-project bug localization is using data from source project and a few data from target project to locate the potentially buggy source code in the target project that produce the program behaviors specified in a
 given bug report. Let $\mathcal{C}_s =\{ c_{s_1}, c_{s_2}, \cdots, c_{s_{nc_1}}\}$ and $\mathcal{C}_t =\{ c_{t_1}, c_{t_2}, \cdots, c_{t_{nc_2}}\}$ denote the set of source code from source project and target project respectively, $\mathcal{C}=\mathcal{C}_s \bigcup \mathcal{C}_t $. $\mathcal{R}_s =\{ r_{s_1}, r_{s_2}, \cdots, r_{s_{nr_1}}\}$ and $\mathcal{R}_t =\{ r_{t_1}, r_{t_2}, \cdots, r_{t_{nr_1}}\}$ denotes the bug reports, respectively, $\mathcal{R}=\mathcal{R}_s \bigcup \mathcal{R}_t $, where $nc_1, nc_2, nr_1, nr_2$ denote the number of source files and bug reports from source project and target project, respectively. We formulate cross-project bug localization as a learning task which aims to learn a prediction function $f: \mathcal{R} \times \mathcal{C} \mapsto \mathcal{Y}$. $y_{ij} \in \mathcal{Y} = \{+1, -1 \}$ indicates whether a source code $c_j \in \mathcal{C} $ is relevant to a bug report $r_i \in \mathcal{R}$.
 
@@ -6,12 +14,7 @@ In this paper, we propose a novel deep transfer neural network named TRANP-CNN (
 \subsection{General Structure}
 The general structure of TRANP-CNN is shown in Figure~\ref{fig:structure}. Specifically, TRANP-CNN consists of four parts: input layer, transferable feature extraction layers, heterogeneous predicting adaptation layers and output layer. The left figure indicates the training process of TRANP-CNN and the right figure indicates the test process. Since the TRANP-CNN model is used to deal with cross-project bug localization tasks, during the training process, pairs of source code and bug reports and ground truth labels from source project are fed into the deep neural network for weight training, as well as very few data from target project, and for testing process, a new bug report from target project and its candidate source code are fed into the model, which outputs their relevant scores indicating which code have high relevance to the given bug report and are located as buggy.
 
-\begin{figure*}[hbt]
-\centering
-\includegraphics[width = 2\columnwidth]{pic/structure.pdf}
-\caption{The overall structure of Transfer Natural and Programming language CNN.  The left part is the training process of TRANP-CNN based on the bug reports and source code from source projects and a few data from target projects, the weights of which are trained by minimizing the loss of ensemble loss from fully-connected networks $fc_s$ and $fc_t$. The right part is the testing process, a new bug report and its candidate source code are fed into the model, and TRANP-CNN outputs their relevant scores for bug localization.}
-\label{fig:structure}
-\end{figure*}
+
 
 \subsection{Transferable Feature Extraction Layers}
 Before processing in Transferable Feature Extraction Layers, the source code and bug reports should be firstly encoded as feature vectors. Traditional techniques usually employs TFIDF to represent text content, which may lose the word relationships. In our model, to maintain the semantics with structural information of text, we apply word2vec technique to encode bug reports and source code.
