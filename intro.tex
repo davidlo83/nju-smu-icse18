@@ -8,13 +8,14 @@ To help developers in locating bugs, various automated solutions have been propo
 One limitation of a supervised approach is the need for sufficient good quality training data. Insufficient or low quality data can be detrimental to its effectiveness. This problem is particularly important when a bug localization approach needs to be applied to new projects with limited bug fixing history. Unfortunately, this issue, often referred to as the {\em cold-start problem}, has not been explored much by past supervised bug localization studies.
 
 %Our approach
-To address the above mentioned limitation, in this work we propose {\em Deep Transfer Bug Localization} (DTBL). DBTL deals with cold-start problem affecting a target software project by adapting data from other projects. DTBL, the first cross-project bug localization solution, combines deep and transfer learning to address the cold-start problem. \dl{Please add brief description of the approach.}
+To address the above mentioned limitation, in this work we propose {\em Deep Transfer Bug Localization} (DTBL). DTBL deals with cold-start problem affecting a target software project by adapting data from other projects. DTBL, the first cross-project bug localization solution, combines deep and transfer learning to address the cold-start problem. \dl{Please add brief description of the approach.} The DTBL model firstly employs transferable feature extraction layers to extract semantic features of bug reports and source code from both source and target projects, and then heterogeneous predicting adaptation layers are applied to learn prediction function for source project data and target data separately.  
 
 %Novelty over prior work (TCA+, etc.)
 There have been a number of transfer learning solutions designed to help with cold-start problem in software engineering context. For example, .... Our approach is unique from previous solutions in the following ways. First, ... \dl{Please compare the approach with existing work and highlight its novelty.}
 
 %Experiment results
-We have evaluated our proposed solution on ... The experiment results first highlight the need for DBTL as existing solutions cannot effectively make use of data from other projects to create a model that can accurately locate bug in a target project (given a bug report). ... dl{Please add brief description of the results.}
+\dl{Please add brief description of the results.}
+We have evaluated our proposed solution on 6 tasks from several open source projects. The experiment results first highlight the need for DBTL as existing solutions cannot effectively make use of data from other projects to create a model that can accurately locate bug in a target project (given a bug reports). The experiments results also show that our proposed DTBL model TRANP-CNN outperforms previous state-of-the-art bug localization methods on all 6 tasks in terms of all evaluation metrics. In addition, the experiments have highlight the effectiveness of heterogeneous predicting adaptation layers, which is the key part of TRANP-CNN.
 
 %List of contributions
 Our contributions are as follows:
@@ -23,9 +24,10 @@ Our contributions are as follows:
 
 \item We present a new direction of research on cross-project bug localization. We highlight that existing supervised bug localization techniques are not able to perform well when they are are trained using data from other projects. 
     
-\item We propose a deep transfer learning solution that .... \dl{Please add very brief description of the approach highlighting its novelty.}
+\item \dl{Please add very brief description of the approach highlighting its novelty.} We propose a deep transfer learning model named TRANP-CNN that employs programming language specific convolutional neural network to extract transferable semantic features, and a novel heterogeneous predicting adaptation layers are designed to improve cross-project bug localization performance.  
 
-\item We have evaluated our proposed approach on ... The results show that ... \dl{Please add very brief description of the results.}
+\item \dl{Please add very brief description of the results.} We have evaluated our proposed approach on several open source projects. The results show that the TRANP-CNN model significantly improve the performance on all 6 tasks in terms of Top-k rank, MAP and MRR metrics. 
+
 
 \end{enumerate}
 
