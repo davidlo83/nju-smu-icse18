@@ -13,6 +13,13 @@ Noticing that the semantics of bug reports in natural language and source code i
 
 Huo et al.~\cite{huo2016learning} found that programming language, although in textual format, differs from natural language mainly in two aspects. First, the basic language component carrying meaningful semantics in natural language is word or term, and in programming language the basic language component carrying meaningful semantics is statement. Second, natural language organizes words in a ``flat'' way while programming language organizes its statements in a ``structured'' way to produce richer semantics. Therefore, the structure of CNN for programming language is specifically designed to solve these two points. The first convolutional and pooling layers extract features within statements while preserving the integrity of statements by sliding convolutional window within statements. The subsequent convolutional and pooling layers extract features between statements reflecting the structural nature by employing different size of convolutional windows. More details can be referred in~\cite{huo2016learning}.
 
+\begin{figure}[hbt]
+\centering
+\includegraphics[width = \columnwidth]{pic/NPCNN.pdf}
+\caption{The structure of convolutional neural network for programming language.}
+\label{fig:npcnn}
+\end{figure}
+
 After feature extraction, the middle-level features generated from bug reports and source code are fed into the cross-language feature fusion layers. To deal with the imbalance nature of bug localization data, the cross-language feature fusion layers introduce an unequal misclassification cost according to the imbalance ratio and train the fully connected network in a cost sensitive manner. Let $cost_n$ denote the cost of incorrectly associate an irrelevant source code file to a bug report and $cost_p$ denote the cost of missing a buggy source code file that is responsible for the reported bugs. Then the weights of the fully connected networks w can be learned by minimizing the following objective function based on SGD (stochastic gradient descent).
 \begin{equation}
 \begin{aligned}
