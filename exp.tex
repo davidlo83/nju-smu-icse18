@@ -19,7 +19,7 @@ We compare our proposed model \TRANPCNN with following baseline methods:
   \item TCA-P (Transfer Component Analysis with Multi-layer Perceptron): a state-of-the-art transfer learning method in software engineering, which firstly employ TCA to map source and target project into a same feature space and then apply MLPs for bug localization (same settings with fully-connected layers in \TRANPCNN).
    \item TCA-D (Transfer Component Analysis with Deep features): a state-of-the-art transfer learning method in software engineering, which firstly employ TCA to map source and target project into a same feature space and then apply Logistic Regression for bug localization (using deep features extracted from CNN instead of TFIDF features).
   \item NP-CNN (Natural and Programming language Convolutional Neural Network)~\cite{huo2016learning}: a state-of-the-art deep model for bug localization, which use source project data for training and localizing the buggy source code for target project data.
-  \item SimpleTrans (Simple Transfer): a variant of the \TRANPCNN model, which trains the prediction model on the source project data, and use fine tune method for weight adjustment based on the target project.
+%  \item SimpleTrans (Simple Transfer): a variant of the \TRANPCNN model, which trains the prediction model on the source project data, and use fine tune method for weight adjustment based on the target project.
 \end{itemize}
 
 \subsection{Experimental Settings}
@@ -63,10 +63,10 @@ For data partition, we use data from source projects and 20\% target projects as
     \multirow{3}[0]{*}{\textbf{J}$\rightarrow$\textbf{L}} & NPCNN & 0.110  & 0.255  & 0.323  & 0.141  & 0.176  \\
           & NPCNN$^{partial}$ & 0.097  & 0.219  & 0.335  & 0.095  & 0.109  \\
           & NPCNN$^{full}$ & 0.289  & 0.484  & 0.611  & 0.287  & 0.387  \\
-          \midrule
-    \multirow{3}[0]{*}{Avg.} & NPCNN & 0.177  & 0.254  & 0.372  & 0.200  & 0.262  \\
-          & NPCNN$^{partial}$ & 0.112  & 0.229  & 0.317  & 0.151  & 0.197  \\
-          & NPCNN$^{full}$ & 0.443  & 0.563  & 0.647  & 0.407  & 0.508  \\
+%          \midrule
+%    \multirow{3}[0]{*}{Avg.} & NPCNN & 0.177  & 0.254  & 0.372  & 0.200  & 0.262  \\
+%          & NPCNN$^{partial}$ & 0.112  & 0.229  & 0.317  & 0.151  & 0.197  \\
+%          & NPCNN$^{full}$ & 0.443  & 0.563  & 0.647  & 0.407  & 0.508  \\
           \bottomrule
     \end{tabular}%
     }
@@ -74,6 +74,13 @@ For data partition, we use data from source projects and 20\% target projects as
   \label{tab:within}%
 \end{table}%
 
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width = 0.9\columnwidth]{pic/results1.pdf}
+\caption{Performance comparisons between within-project and ross-project bug localization.}
+\label{fig:results1}
+\end{figure}
 
 
 \textbf{RQ1}: \textit{Is there a need for cross-project bug localization?}
@@ -90,52 +97,59 @@ The results are detailed in Tab.~\ref{tab:within}. There are six tasks in the ta
 
 \textbf{RQ2}: \textit{Do the heterogeneous predicting adaptation layers improve the bug localization performance?}
 
-To answer this research question, we compare the results of \TRANPCNN with NPCNN and SimpleTrans (Simple Transfer). The difference of the structure between \TRANPCNN and NPCNN is that \TRANPCNN employs two fully-connected networks to combine deep features from source projects and target projects in the heterogeneous predicting adaptation layers, respectively, which will counter the influences that cross-project data may have different distribution leading to a bias performance. The results are detailed in Tab.~\ref{tab:results2}.
+To answer this research question, we compare the results of \TRANPCNN with the original NPCNN. The difference of the structure between \TRANPCNN and NPCNN is that \TRANPCNN employs two fully-connected networks to combine deep features from source projects and target projects in the heterogeneous predicting adaptation layers, respectively, which will counter the influences that cross-project data may have different distribution leading to a bias performance. The results are detailed in Tab.~\ref{tab:results2}.
 
-According to the results, we find that SimpleTrans improves a little performance against NPCNN, showing that transfer technique is effective in improving cross-project bug localization performance. Meanwhile, it can be obviously found that \TRANPCNN performs better than NPCNN and SimpleTrans in terms of all evaluation metrics, which shows that the structure of cross-project feature fusion layer is able to improve cross-project bug localization performance.
+%According to the results, we find that SimpleTrans improves a little performance against NPCNN, showing that transfer technique is effective in improving cross-project bug localization performance. Meanwhile, it can be obviously found that \TRANPCNN performs better than NPCNN in terms of all evaluation metrics, which shows that the structure of cross-project feature fusion layer is able to improve cross-project bug localization performance.
 
 \begin{table}[htbp]
   \centering
   \caption{Performance Comparisons with previous deep models.}
-  \resizebox{!}{0.5\columnwidth}{
+  \resizebox{!}{0.35\columnwidth}{
     \begin{tabular}{c|l|c|c|c|c|c}
     \toprule
     Tasks & \textit{Methods} & \textit{Top 1} & \textit{Top 5} & \textit{Top 10} & \textit{MAP} & \textit{MRR} \\
     \midrule
-    \multirow{3}[0]{*}{\textbf{J}$\rightarrow$\textbf{H}} & NPCNN & 0.317  & 0.362  & 0.508  & 0.276  & 0.352  \\
-          & SimpleTrans & 0.354 & 0.396 & 0.563 & 0.298 & 0.395 \\
+    \multirow{2}[0]{*}{\textbf{J}$\rightarrow$\textbf{H}} & NPCNN & 0.317  & 0.362  & 0.508  & 0.276  & 0.352  \\
+%          & SimpleTrans & 0.354 & 0.396 & 0.563 & 0.298 & 0.395 \\
           & \TRANPCNN & 0.500   & 0.583 & 0.625 & 0.376 & 0.543 \\
           \midrule
-    \multirow{3}[0]{*}{\textbf{L}$\rightarrow$\textbf{H}} & NPCNN & 0.142  & 0.192  & 0.345  & 0.161  & 0.218  \\
-          & SimpleTrans & 0.163 & 0.146 & 0.354 & 0.141 & 0.246 \\
+    \multirow{2}[0]{*}{\textbf{L}$\rightarrow$\textbf{H}} & NPCNN & 0.142  & 0.192  & 0.345  & 0.161  & 0.218  \\
+%          & SimpleTrans & 0.163 & 0.146 & 0.354 & 0.141 & 0.246 \\
           & \TRANPCNN & 0.275 & 0.35  & 0.488 & 0.242 & 0.332 \\
           \midrule
-    \multirow{3}[0]{*}{\textbf{H}$\rightarrow$\textbf{J}} & NPCNN & 0.167  & 0.287  & 0.349  & 0.247  & 0.277  \\
-          & SimpleTrans & 0.133 & 0.324 & 0.365 & 0.273 & 0.301 \\
+    \multirow{2}[0]{*}{\textbf{H}$\rightarrow$\textbf{J}} & NPCNN & 0.167  & 0.287  & 0.349  & 0.247  & 0.277  \\
+%          & SimpleTrans & 0.133 & 0.324 & 0.365 & 0.273 & 0.301 \\
           & \TRANPCNN & 0.396 & 0.443 & 0.514 & 0.371 & 0.434 \\
           \midrule
-    \multirow{3}[0]{*}{\textbf{L}$\rightarrow$\textbf{J}} & NPCNN & 0.152  & 0.182  & 0.318  & 0.176  & 0.221  \\
-          & SimpleTrans & 0.144 & 0.204 & 0.382 & 0.247 & 0.249 \\
+    \multirow{2}[0]{*}{\textbf{L}$\rightarrow$\textbf{J}} & NPCNN & 0.152  & 0.182  & 0.318  & 0.176  & 0.221  \\
+%          & SimpleTrans & 0.144 & 0.204 & 0.382 & 0.247 & 0.249 \\
           & \TRANPCNN & 0.460  & 0.462 & 0.488 & 0.404 & 0.478 \\
           \midrule
-    \multirow{3}[0]{*}{\textbf{H}$\rightarrow$\textbf{L}} & NPCNN & 0.173  & 0.246  & 0.390  & 0.196  & 0.329  \\
-          & SimpleTrans & 0.197 & 0.323 & 0.426 & 0.152 & 0.313 \\
+    \multirow{2}[0]{*}{\textbf{H}$\rightarrow$\textbf{L}} & NPCNN & 0.173  & 0.246  & 0.390  & 0.196  & 0.329  \\
+%          & SimpleTrans & 0.197 & 0.323 & 0.426 & 0.152 & 0.313 \\
           & \TRANPCNN & 0.361 & 0.445 & 0.535 & 0.279 & 0.414 \\
           \midrule
-    \multirow{3}[0]{*}{\textbf{J}$\rightarrow$\textbf{L}} & NPCNN & 0.110  & 0.255  & 0.323  & 0.141  & 0.176  \\
-          & SimpleTrans & 0.140  & 0.282 & 0.342 & 0.163 & 0.224 \\
+    \multirow{2}[0]{*}{\textbf{J}$\rightarrow$\textbf{L}} & NPCNN & 0.110  & 0.255  & 0.323  & 0.141  & 0.176  \\
+%          & SimpleTrans & 0.140  & 0.282 & 0.342 & 0.163 & 0.224 \\
           & \TRANPCNN & 0.301 & 0.410  & 0.517 & 0.247 & 0.368 \\
-          \midrule
-    \multirow{3}[0]{*}{Avg.} & NPCNN & 0.177  & 0.254  & 0.372  & 0.200  & 0.262  \\
-          & SimpleTrans & 0.189  & 0.279  & 0.405  & 0.212  & 0.288  \\
-          & \TRANPCNN & 0.382  & 0.449  & 0.528  & 0.320  & 0.428  \\
+%          \midrule
+%    \multirow{3}[0]{*}{Avg.} & NPCNN & 0.177  & 0.254  & 0.372  & 0.200  & 0.262  \\
+%          & SimpleTrans & 0.189  & 0.279  & 0.405  & 0.212  & 0.288  \\
+%          & \TRANPCNN & 0.382  & 0.449  & 0.528  & 0.320  & 0.428  \\
           \bottomrule
     \end{tabular}%
     }
   \label{tab:results2}%
 \end{table}%
 
-The results show that \TRANPCNN performs better than NP-CNN and SimpleTrans, which suggests that the cross-projects feature fusion layers can improve the performance of cross-projects bug localization.
+\begin{figure}[hbt]
+\centering
+\includegraphics[width = 0.9\columnwidth]{pic/results2.pdf}
+\caption{Performance comparisons with previous deep models.}
+\label{fig:results2}
+\end{figure}
+
+The results show that \TRANPCNN performs better than NP-CNN, which suggests that the cross-projects feature fusion layers can improve the performance of cross-projects bug localization.
 
 \textbf{RQ3}: \textit{Can \TRANPCNN outperform other bug localization methods?}
 
@@ -147,7 +161,7 @@ According to the results, we have several findings: 1. Burak and TCA techniques 
 % Table generated by Excel2LaTeX from sheet 'Sheet3'
 \begin{table}[htbp]
   \centering
-  \caption{Performance comparisons with traditional bug localization performance.}
+  \caption{Performance comparisons with traditional bug localization models.}
   \resizebox{!}{0.9\columnwidth}{
     \begin{tabular}{c|l|c|c|c|c|c}
     \toprule
@@ -194,16 +208,23 @@ According to the results, we have several findings: 1. Burak and TCA techniques 
           & TCA-P & 0.136  & 0.132  & 0.192  & 0.173  & 0.237  \\
           & TCA-D & 0.142  & 0.297  & 0.308  & 0.238  & 0.293  \\
           & \TRANPCNN & 0.301  & 0.410  & 0.517  & 0.247  & 0.368  \\
-          \midrule
-    \multirow{6}[0]{*}{Avg.} & VSM   & 0.085  & 0.172  & 0.248  & 0.133  & 0.157  \\
-          & Burak & 0.126  & 0.166  & 0.234  & 0.157  & 0.182  \\
-          & TCA-R & 0.127  & 0.178  & 0.254  & 0.176  & 0.207  \\
-          & TCA-P & 0.125  & 0.160  & 0.265  & 0.167  & 0.217  \\
-          & TCA-D & 0.136  & 0.223  & 0.319  & 0.199  & 0.246  \\
-          & \TRANPCNN & 0.382  & 0.449  & 0.528  & 0.320  & 0.428  \\
+%          \midrule
+%    \multirow{6}[0]{*}{Avg.} & VSM   & 0.085  & 0.172  & 0.248  & 0.133  & 0.157  \\
+%          & Burak & 0.126  & 0.166  & 0.234  & 0.157  & 0.182  \\
+%          & TCA-R & 0.127  & 0.178  & 0.254  & 0.176  & 0.207  \\
+%          & TCA-P & 0.125  & 0.160  & 0.265  & 0.167  & 0.217  \\
+%          & TCA-D & 0.136  & 0.223  & 0.319  & 0.199  & 0.246  \\
+%          & \TRANPCNN & 0.382  & 0.449  & 0.528  & 0.320  & 0.428  \\
           \bottomrule
     \end{tabular}%
     }
   \label{tab:results3}%
 \end{table}%
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width = 0.9\columnwidth]{pic/results3.pdf}
+\caption{Performance comparisons with traditional bug localization models.}
+\label{fig:results3}
+\end{figure}
 
