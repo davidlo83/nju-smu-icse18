@@ -1,20 +1,28 @@
-We consider three datasets containing a total of 5,591 reports from JIRA issue tracking systems of HTTPClient (H)\footnote{\url{http://hc.apache.org/httpcomponents-client-ga/index.html}}, Jackrabbit (J)\footnote{\url{https://jackrabbit.apache.org/jcr/index.html}}, and Lucene-Java (L)\footnote{\url{ http://lucene.apache.org/}}. HTTPClient is a library for implementing the client side of HTTP standard, while Jackrabbit is a content repository, and Lucene is a text search engine. We only consider projects with JIRA issue tracking systems since links between bug reports and their bug fixing commits stored in them are typically more reliable than those stored in Bugzilla issue tracking systems -- c.f.,~\cite{BissyandeTWLJR13}. The details of the reports considered in this study are shown in Table~\ref{tab:reports} and they have been used before by Kochhar et al.~\cite{KochharTL14}. 
+We consider datasets that were previously studied and manually vetted by Herzig et al.~\cite{HerzigJZ13} and Kochhar et al.~\cite{KochharTL14}. Herzig et al. highlighted that many reports in issue tracking systems are wrongly labelled as bugs when they are actually feature requests (and vice versa). Kochhar et al. highlighted that many bug reports are already {\em fully localized}, i.e., developers have already identified all buggy source code files in the bug reports. For such bug reports, bug localization tool is no longer needed.
+
+To deal with these biases, Herzig et al. have manually classified 5,591 issue reports from JIRA issue tracking systems of three projects (HTTPClient, Jackrabbit, and Lucene-Java) and 1,810 issue reports from Bugzilla issue tracking systems of two projects (Rhino and Tomcat 5) and released the dataset publicly\footnote{\url{https://www.st.cs.uni-saarland.de/softevo/bugclassify}}. Kochhar et al. have analyzed 1,191 reports from JIRA issue tracking systems that were confirmed by Herzig et al. as bug reports. They focused on reports from JIRA issue tracking systems since a number of studies have shown that reports in Bugzilla are often poorly linked with commits that fix them~\cite{BachmannBRDB10,BirdBADBFD09}, while bug reports in JIRA are often more well-linked as JIRA provides a utility to better connect bug reports to their corresponding commits~\cite{BissyandeTWLJR13}. Kochhar et al. have identified a set of 398 bug reports that are already {\em fully localized} and another set of 793 bug reports that are either {\em partially localized} (i.e., reports where some of the files containing the bugs are explicitly mentioned in the report) or {\em not localized} (i.e., reports which do not explicitly specify any of the buggy files.). They also have released this dataset publicly\footnote{\url{https://github.com/smusis/buglocalizationbiases}}.
+
+In this work, we consider the 793 bug reports from HTTPClient (H), Jackrabbit (J), and Lucene-Java (L) provided by Kochhar et al. HTTPClient\footnote{\url{http://hc.apache.org/httpcomponents-client-ga/index.html}} is a library for implementing the client side of HTTP standard, while Jackrabbit\footnote{\url{https://jackrabbit.apache.org/jcr/index.html}} is a content repository, and Lucene is a text search engine\footnote{\url{ http://lucene.apache.org/}}. The details of the reports considered in this study are shown in Table~\ref{tab:reports}. Although the number of reports considered is fewer than those considered in several prior work, these reports are of high-quality. They has been manually vetted before and are absent from well-known biases identified by Herzig et al. and Kochhar et al. Most past studies have ignored these well-known biases and thus introduce a threat to the validity of their findings.
+
+%that have been fully localized by developers. They focus on bug reports
+%containing a total of 5,591 reports from JIRA issue tracking systems of  
+%We only consider projects with JIRA issue tracking systems since links between bug reports and their bug fixing commits stored in them are typically more reliable than those stored in Bugzilla issue tracking systems -- c.f.,~\cite{BissyandeTWLJR13}. The details of the reports considered in this study are shown in Table~\ref{tab:reports} and they have been used before by Kochhar et al.~\cite{KochharTL14}.
 
 \begin{table}
 \caption{Bug Report Dataset}\label{tab:reports}
 \begin{tabular}{|l|l|l}
 \hline
 {\bf Project} & {\bf \# Reports} \\
-\hline HTTPClient & 746\\
-\hline Jackrabbit & 2,402\\
-\hline Lucene-Java & 2,443\\
+\hline HTTPClient & 63\\
+\hline Jackrabbit & 534\\
+\hline Lucene-Java & 196\\
 \hline
 \end{tabular}
 \end{table}
 
-\dl{Xuan, I thought we are also using your previous datasets? If we only use Pavneet's dataset, do we use all of them or only some of them that are not biased? Pavneet showed that some of the dataset is biased ... reviewers may be concerned with this bias ... Bias 2 mentioned in this paper (\url{http://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=3425&context=sis_research}) is particularly important.}
+%\dl{Xuan, I thought we are also using your previous datasets? If we only use Pavneet's dataset, do we use all of them or only some of them that are not biased? Pavneet showed that some of the dataset is biased ... reviewers may be concerned with this bias ... Bias 2 mentioned in this paper (\url{http://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=3425&context=sis_research}) is particularly important.}
 
-\xh{Currently we only use Paveneet's datasets (H,J and L), and yes we have considered the bias, and we only use the unbiased data sets. The ``fully localized'' bug reports are filtered. Our previous data sets are bias, so we are not sure if we use here is suitable.  If necessary, we can conduct several comparison experiments ono more data sets. }
+%\xh{Currently we only use Paveneet's datasets (H,J and L), and yes we have considered the bias, and we only use the unbiased data sets. The ``fully localized'' bug reports are filtered. Our previous data sets are bias, so we are not sure if we use here is suitable.  If necessary, we can conduct several comparison experiments ono more data sets. }
 
 %\dl{Ferdian, please add details datasets. Please see the following papers for details of the datasets:~\cite{huo2016learning,KochharTL14}.}
 
