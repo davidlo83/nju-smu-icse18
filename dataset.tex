@@ -2,23 +2,23 @@ We consider datasets that were previously studied and manually vetted by Herzig 
 
 To deal with these biases, Herzig et al. have manually classified 5,591 issue reports from JIRA issue tracking systems of three projects (HTTPClient, Jackrabbit, and Lucene-Java) and 1,810 issue reports from Bugzilla issue tracking systems of two projects (Rhino and Tomcat 5) and released the dataset publicly\footnote{\url{https://www.st.cs.uni-saarland.de/softevo/bugclassify}}. Kochhar et al. have analyzed 1,191 reports from JIRA issue tracking systems that were confirmed by Herzig et al. as bug reports. They focused on reports from JIRA issue tracking systems since a number of studies have shown that reports in Bugzilla are often poorly linked with commits that fix them~\cite{BachmannBRDB10,BirdBADBFD09}, while bug reports in JIRA are often more well-linked as JIRA provides a utility to better connect bug reports to their corresponding commits~\cite{BissyandeTWLJR13}. Kochhar et al. have identified a set of 398 bug reports that are already {\em fully localized} and another set of 793 bug reports that are either {\em partially localized} (i.e., reports where some of the files containing the bugs are explicitly mentioned in the report) or {\em not localized} (i.e., reports which do not explicitly specify any of the buggy files.). They also have released this dataset publicly\footnote{\url{https://github.com/smusis/buglocalizationbiases}}.
 
-In this work, we consider the 793 bug reports from HTTPClient (H), Jackrabbit (J), and Lucene-Java (L) provided by Kochhar et al. HTTPClient\footnote{\url{http://hc.apache.org/httpcomponents-client-ga/index.html}} is a library for implementing the client side of HTTP standard, while Jackrabbit\footnote{\url{https://jackrabbit.apache.org/jcr/index.html}} is a content repository, and Lucene is a text search engine\footnote{\url{ http://lucene.apache.org/}}. The details of the reports considered in this study are shown in Table~\ref{tab:reports}. Although the number of reports considered is fewer than those considered in several prior work, these reports are of high-quality. They has been manually vetted before and are absent from well-known biases identified by Herzig et al. and Kochhar et al. Most past studies have ignored these well-known biases and thus introduce a threat to the validity of their findings.
+In this work, we consider the 793 bug reports from three software systems: 63 from HTTPClient (H), 534 from Jackrabbit (J), and 196 from Lucene-Java (L), which are provided by Kochhar et al. HTTPClient\footnote{\url{http://hc.apache.org/httpcomponents-client-ga/index.html}} is a library for implementing the client side of HTTP standard, while Jackrabbit\footnote{\url{https://jackrabbit.apache.org/jcr/index.html}} is a content repository, and Lucene is a text search engine\footnote{\url{ http://lucene.apache.org/}}. The details of the reports considered in this study are shown in Table~\ref{tab:reports}. Although the number of reports considered is fewer than those considered in several prior work, these reports are of high-quality. They has been manually vetted before and are absent from well-known biases identified by Herzig et al. and Kochhar et al. Most past studies have ignored these well-known biases and thus introduce a threat to the validity of their findings.
 
 %that have been fully localized by developers. They focus on bug reports
 %containing a total of 5,591 reports from JIRA issue tracking systems of
 %We only consider projects with JIRA issue tracking systems since links between bug reports and their bug fixing commits stored in them are typically more reliable than those stored in Bugzilla issue tracking systems -- c.f.,~\cite{BissyandeTWLJR13}. The details of the reports considered in this study are shown in Table~\ref{tab:reports} and they have been used before by Kochhar et al.~\cite{KochharTL14}.
 
-\begin{table}
-\caption{Bug Report Dataset}\label{tab:reports}
-\begin{tabular}{|l|l|l}
-\hline
-{\bf Project} & {\bf \# Reports} \\
-\hline HTTPClient & 63\\
-\hline Jackrabbit & 534\\
-\hline Lucene-Java & 196\\
-\hline
-\end{tabular}
-\end{table}
+%\begin{table}
+%\caption{Bug Report Dataset}\label{tab:reports}
+%\begin{tabular}{|l|l|l}
+%\hline
+%{\bf Project} & {\bf \# Reports} \\
+%\hline HTTPClient & 63\\
+%\hline Jackrabbit & 534\\
+%\hline Lucene-Java & 196\\
+%\hline
+%\end{tabular}
+%\end{table}
 
 %\dl{Xuan, I thought we are also using your previous datasets? If we only use Pavneet's dataset, do we use all of them or only some of them that are not biased? Pavneet showed that some of the dataset is biased ... reviewers may be concerned with this bias ... Bias 2 mentioned in this paper (\url{http://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=3425&context=sis_research}) is particularly important.}
 
