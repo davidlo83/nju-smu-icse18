@@ -11,7 +11,10 @@ Let $\mathcal{C}^s = \{ { c^s_1, c^s_2}, \cdots, c^s_{n^c_1} \} $ and $\mathcal{
 
 Source and target projects may differ from each other in the way how a bug report is localized to the corresponding source code files. To effectively learn the prediction function for a target project, one problem should be addressed carefully: how to identify information from a source project that is potentially useful for learning the prediction function for the target project? Intuitively, if information from the source project can be used for the target project, both must share latent commonalities. Differences observed in the two projects are due to the way these latent commonalities are manifested. Therefore, we argue that a model that facilitates an effective cross-project bug localization can be constructed by 1) learning a shared latent feature representation from both source and target project, and 2) biasing the learner towards specific project considering the shared latent feature representation.
 
-We instantiate the aforementioned idea by proposing a novel deep transfer neural network named \TRANPCNN (TRAnsfer Natural and Program Language Convolutional Neural Network). Firstly, \TRANPCNN takes bug reports and source code files as inputs and learns a common transferable feature representation shared by both source and target projects. Next, \TRANPCNN simultaneously creates a pair of prediction functions that are biased towards the source and target project, respectively, based on the shared feature representation, in order to generate project-specific predictions for the target domain. \dl{Why do we need to learn a prediction function for the source project? This is not clear to me ...}
+We realize the aforementioned idea by proposing a novel deep transfer neural network named \TRANPCNN (TRAnsfer Natural and Program Language Convolutional Neural Network). Firstly, \TRANPCNN takes bug reports and source code files as inputs and learns a common transferable feature representation shared by both source and target projects. Next, \TRANPCNN  creates a pair of prediction functions that are biased towards the source and target project, respectively, based on the shared feature representation. The pair of prediction functions as well as the shared transferable feature representations are
+jointly learned such that the useful information for identifying the correlation between the bug reports and the source codes can be `drive' from the source project to the target project through the transferable feature representation.
+
+
 
 \subsection{Model Structure}
 
@@ -31,14 +34,18 @@ When provided with bug reports and source code files from source and target proj
 
 The transferable features for bug reports and source codes files should satisfy the following properties. First, the transferable features should be able to represent the functional semantics in both bug reports and source code files such that the semantics can be further utilized to identify the correlation patterns between the reports and the files. Second, the extracted semantics should be able to capture some common knowledge between the source and target project such that knowledge learned from the source project can eventually be transferred to facilitate learning for the target project.
 
-To allow for effective knowledge transfer between source and target projects, a key challenge here is how to identify what information is useful and transferable and what is useful but may not be transferable. To address this challenge, we employ a special strategy we refer to as \emph{weight sharing} during the learning process, which imposes a hard constraint that the learned weights in the networks (both N-CNN and P-CNN) for the target project should be exactly the same as the learned weights in the networks for the source project. By weight sharing, the learning procedure that optimizes for good performance on both source project and target project is forced to focus on common features shared by both source and target projects rather than extracting project-specific features for each project. Thus, the resulting features allow for \emph{transfer} of common knowledge that is useful to determine correlation between bug reports and source code files from the source project to the target project. 
+To allow for effective knowledge transfer between source and target projects, a key challenge here is how to identify what information is useful and transferable and what is useful but may not be transferable. To address this challenge, we employ a special strategy we refer to as \emph{weight sharing} during the learning process, which imposes a hard constraint that the learned weights in the networks (both N-CNN and P-CNN) for the target project should be exactly the same as the learned weights in the networks for the source project. By weight sharing, the learning procedure that optimizes for good performance on both source project and target project is forced to focus on common features shared by both source and target projects rather than extracting project-specific features for each project. Thus, the resulting features allow for \emph{transfer} of common knowledge that is useful to determine correlation between bug reports and source code files from the source project to the target project.
+ 
 
 %I'm not sure of the following sentence but the paragraph seems okay without it ... I'm not sure ...
 %Note that such knowledge may need a large amount of labeled training data to be learned for any single project, but now can be directly used for the target project where the labeled training data may be limited especially for the code start.
 
 \subsection{Project-Specific Correlation Fitting Layers}
 
-After being processed by the transferable feature extraction layers, bug reports (as well as the source code files) from both source and target project are represented using the \emph{same} set of transferable features embedded with common knowledge shared by both source and target projects. However, since the source project and target projects may differ in how bug reports and source code files are correlated, the subsequent project-specific correlation fitting layer is employed to fit a model to capture project-specific correlation patterns considering the same set of transferable features.
+After being processed by the transferable feature extraction layers, bug reports (as well as the source code files) from both source and target project are represented using the \emph{same} set of transferable features embedded with common knowledge shared by both source and target projects.
+
+
+However, since the source project and target projects may differ in how bug reports and source code files are correlated, the subsequent project-specific correlation fitting layer is employed to fit a model to capture project-specific correlation patterns considering the same set of transferable features.
 
 \dl{Why do we want simultaneously learn two prediction functions? Why not just learn for target project? I'm not fully sure here ...}
 
@@ -47,21 +54,17 @@ The key challenge here is how to simultaneously learn two prediction functions w
 \dl{The following phrase is unclear to me: fit to correlation pattern of the report-code pair in the source project and target project, respectively, with different substructures $fc^s$ and $fc^t$.}
 \dl{I'm not sure how to fit network substructures to correlation patterns? Do we mean we use the substructures to *learn* different correlation patterns?}
 
-In order to fit the two network substructures $fc^s$ and $fc^t$ to different correlation patterns within the same model structure, we propose the following hybrid loss function to unify the loss from different goals into one function:
-
+In order to fit the two network substructures $fc^s$ and $fc^t$ to different correlation patterns within the same model structure, we propose a hybrid loss function (Eq. \ref{eq:lossfunction}) to unify the loss from different goals into the one loss function.
 \begin{equation}
 \begin{aligned}
 \label{eq:lossfunction}
-\mathop{\arg\min}_{\mathbf{W}}&\sum_{s_i,s_j}\mathcal{L}(\mathbf{h}_{s_i},\mathbf{h}_{s_j}
-,y_{s_{ij}}; W_{fc_s}, W_{conv} ))\\
-+&\sum_{t_i,t_j}\mathcal{L}(\mathbf{h}_{t_i},\mathbf{h}_{t_j},y_{t_{ij}}; W_{fc_t}, W_{conv})+\lambda||\mathbf{W}||^2
+\mathop{\arg\min}_{\mathbf{w}}&\sum_{s_i,s_j}\mathcal{L}(\mathbf{h}^s_i,\mathbf{h}^s_j
+,y^s_{ij}; \mathbf{w}^s_{fc}, \mathbf{w}_{conv} )\\
++&\sum_{t_i,t_j}\mathcal{L}(\mathbf{h}^t_i,\mathbf{h}^t_j,y^t_{ij};\mathbf{w}^t_{fc}, \mathbf{w}_{conv})+\lambda||\mathbf{w}||^2
 \end{aligned}
 \end{equation}
 
-
-In the above equation, $\mathcal{L}$ is the square loss, $\lambda$ is the trade-off parameter and the weight vectors $W$ contains the weight vectors in convolutional neural networks $W_{conv}$, in fully-connected network of source domain $W_{fc_s}$ and in fully-connected network of target domain $W_{fc_t}$.
-
-\dl{The intuition for the above function may need to be elaborated}
+where, the weight vectors $\mathbf{w}=(\mathbf{w}_{conv},\mathbf{w}^s_{fc},\mathbf{w}^t_{fc})$, $w_{conv}$ is the weight vectors in convolutional neural networks, and $\mathbf{w}^s_{fc}$ is the weight in fully-connected network of source domain and $\mathbf{w}^t_{fc}$ is the weight in fully-connected network of target domain. $(\mathbf{h}^s_i, \mathbf{h}^s_j, \mathbf{h}^t_i, \mathbf{h}^t_j)$ indicates the generated middle-level features of source code and bug reports from source domain and target domain, respectively. $y^s_{ij}$ and $y^t_{ij}$ are ground truth labels in source domain and target domain. $\mathcal{L}$ is the square loss and $\lambda$ is the trade-off parameter.
 
 By solving this optimization problem using the stochastic gradient descent (SGD), the proposed \TRANPCNN can be effectively learned.
 
