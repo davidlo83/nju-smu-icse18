@@ -23,9 +23,9 @@ We compare our proposed model \TRANPCNN with the following baseline methods:
 %\ft{Settings would probably better be grouped in experimental settings section. There is no citation for TCA. }
 
 \subsection{Experimental Settings}
-For the parameters of baseline methods (VSM, Burak, TCA+, TCA+$^{(P)}$, TCA+$^{(D)}$), we use the same parameter settings suggested in their work~\cite{rao2011retrieval,NamPK13}. For NP-CNN, we also use the parameter settings suggested in its paper~\cite{huo2016learning}.
+For the parameters of baseline methods (VSM, Burak, TCA+, TCA+$^{P}$, TCA+$^{D}$), we use the same parameter settings suggested in their work~\cite{rao2011retrieval,NamPK13}. For NP-CNN, we also use the parameter settings suggested in its paper~\cite{huo2016learning}.
 
-For the \TRANPCNN model, we employ the most commonly used ReLU $\sigma(x)=\max(0,x)$ as the activation function and the filter windows size $d$ is set to 3, 4, 5, with 100 feature maps each in within-project feature extraction layers. The number of neurons in fully-connected network is set the same as the number of neurons in CNN. In addition, a drop-out method is also applied to prevent co-adaption of hidden units by randomly dropping out values in fully-connected layers. The drop-out probability $p$ is set to 0.25.
+For the \TRANPCNN model, we employ the most commonly used ReLU $\sigma(x)=\max(0,x)$ as the activation function and the filter windows size $d$ is set to 3, 4, 5, with 100 feature maps each in transferable feature extraction layer, and there are two 3 convolutional layers and 3 pooling layers in the convolutional neural networks. The number of neurons in fully-connected network is set the same as the number of neurons in CNN (600), and we employ 4 layers of fully-connected networks each. In addition, a drop-out method is also applied to prevent co-adaption of hidden units by randomly dropping out values in fully-connected layers. The drop-out probability $p$ is set to 0.25.
 
 For data partition, we use all data from a source project and 20\% data from a target project as training sets, and locate buggy codes in 80\% remaining data from the target project. This process is repeated five times to reduce the effect of randomness. We then report the average results for comparison. 
 
@@ -101,7 +101,7 @@ To answer this research question, we compare the results of \TRANPCNN with NP-CN
 
 \begin{table}[htbp]
   \centering
-  \caption{Performance comparisons with previous deep models.}
+  \caption{Performance comparisons with existing deep models.}
   \resizebox{!}{0.35\columnwidth}{
     \begin{tabular}{c|l|c|c|c|c|c}
     \toprule
@@ -139,7 +139,7 @@ To answer this research question, we compare the results of \TRANPCNN with NP-CN
 \begin{figure}[hbt]
 \centering
 \includegraphics[width = 0.9\columnwidth]{pic/results2_avg.pdf}
-\caption{Performance comparisons with deep models.}
+\caption{Performance comparisons with existing deep models.}
 \label{fig:results2}
 \end{figure}
 
