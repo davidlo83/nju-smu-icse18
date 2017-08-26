@@ -59,7 +59,7 @@ Specifically, we utilize two fully-connected networks, namely FCN$^s$ and FCN$^t
 %\dl{Why do we want simultaneously learn two prediction functions? Why not just learn for target project? I'm not fully sure here ...}
 %\ml{Hopefully the previous paragraph addresses david's conerns.}
 
-To jointly learn the project-specific correlation patterns for each project along with the transferable latent features, we propose the a hybrid loss function that simultaneously fulfill the learning objectives for both source and target projects. 
+To jointly learn the project-specific correlation patterns for each project along with the transferable latent features, we propose the following hybrid loss function that simultaneously fulfill the learning objectives for both source and target projects: 
 
 %Let $\varphi^{s}_{i}$ and $\psi^{s}_{j}$ denote the transferable features learn from a report-file pair $(r^s_i, c^s_j)$ with its correlation label $y^s_{ij}$ from the source project and $\varphi^{t}_{i}$ and $\psi^{t}_{j}$ with its correlation label $y^t_{ij}$ from the target project, respectively. Let $\mathbf{W} = [W_{CNN}, W_{FCN}}$ denote all the weights to be learned for the entire
 
@@ -77,14 +77,15 @@ To jointly learn the project-specific correlation patterns for each project alon
 \begin{equation}
 \begin{aligned}
 \label{eq:lossfunction}
-\mathop{\arg\min}_{\mathbf{W}}&\sum_{i,j}\mathcal{L}(r^s_i,c^s_j,,y^s_{ij}; \mathbf{W}) \\
-+&\sum_{i,j}\mathcal{L}(r^t_i,c^t_j,y^t_{ij}; \mathbf{W})+\lambda||\mathbf{W}||^2
+\mathop{\arg\min}_{\mathbf{W}}&\sum_{i,j}\mathcal{L}(r^s_i,c^s_j,y^s_{ij}; \mathbf{W}) \\
++&\sum_{i,j}\mathcal{L}(r^t_i,c^t_j,y^t_{ij}; \mathbf{W}) \\
++&\lambda||\mathbf{W}||^2
 \end{aligned}
 \end{equation}
 %
-where $\mathbf{W} = [W_{CNN}, W_{FCN}]$ is the vector all the weights on the network connections to be learned for the entire \TRANPCNN, and $\mathcal{L}$ is the any widely used loss function for deep learning that computes the empirical loss of the network with weights $\mathbf{W}$ by taking the report-code pair $(r^s_i, c^s_j)$ and $(r^t_i, c^t_j)$ from the source and target project as well as their correlation label $y^s_{ij}$ and $y^t_{ij}$, respectively. The first term evaluates how well the prediction is for the source project, the second terms evaluates how well the prediction for the target project, and the third term is an regularization term balanced by a hyper-parameter $\lambda$ in the purpose of avoid the risk of overfitting.
+In the above equation, $\mathbf{W} = [W_{CNN}, W_{FCN}]$ is the vector of all the weights on the network connections to be learned for the entire \TRANPCNN. $\mathcal{L}(r,s,y)$ is the squared loss between project-specific prediction layer's output and the correlation label $y$ between bug report $r$ and source code $s$. $(r^s_i, c^s_j)$ and $(r^t_i, c^t_j)$ are report-code pairs from source and target project, respectively.  $y^s_{ij}$ and $y^t_{ij}$ are correlation labels for $(r^s_i, c^s_j)$ and $(r^t_i, c^t_j)$, respectively. The first term of Equation~\ref{eq:lossfunction} evaluates how well the prediction is for the source project, the second evaluates how well the prediction for the target project, while the third is a regularization term controlled by a hyper-parameter $\lambda$ to avoid the risk of overfitting.
 
-We train \TRANPCNN based on back-propagation by minimizing the hybrid loss function using using the stochastic gradient descent (SGD) \cite{duchi2011adaptive}.
+We train \TRANPCNN by minimizing the hybrid loss function using stochastic gradient descent (SGD) \cite{duchi2011adaptive}.
 
 %\lambda is a hyepr-parameter that balance the empirical loss and the regularized term. Ther
 
