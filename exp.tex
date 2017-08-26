@@ -33,6 +33,25 @@ For data partition, we use all data from a source project and 20\% data from a t
 
 \subsection{Experimental Results for Research Questions}
 
+
+
+
+
+
+\textbf{RQ1}: \textit{Is there a need for cross-project bug localization?}
+
+To answer this research question, we compare the results of using NP-CNN for bug localization in different settings.
+
+\begin{itemize}
+  \item NP-CNN: Directly employs NP-CNN for cross-project bug localization, which means directly training the model on the data from a source project and locating the bugs in a target project.
+  \item NP-CNN$^{partial}$: Employs NP-CNN using partial data of a target project, which means training based on a partial data (20\%) from the target project, and localizing buggy files without using data from a source project.
+  \item NP-CNN$^{full}$: Employs NP-CNN using full data of a target project. In this setting, we conduct a 5-fold cross-validation for comparison.
+\end{itemize}
+
+The results are detailed in Table~\ref{tab:results1} and Figure~\ref{fig:results1}. There are six tasks in the table.%, in which $\textbf{H}$ represents project \textit{HTTPClient}, $\textbf{J}$ represents project \textit{Jackrabbit} and $\textbf{L}$ represents \textit{Lucene-Java}. 
+The task $\textbf{H} \rightarrow \textbf{J}$ represents using \textit{HTTPClient} as source project and predicts the location of buggy files in \textit{Jackrabbit}. The results show that the performance of bug localization using full data of the target project is the best and has a large gap against the performance of using only a partial data. For cross-project bug localization, the performance of NP-CNN that directly uses a source project is better than NP-CNN$^{partial}$, showing that cross-project data is useful to improve bug localization performance. However, directly using within-project bug localization does not work as well as NP-CNN$^{full}$. These results suggest that there is a need for cross-project bug localization, since directly using within-project bug localization method does not show a good performance.
+
+
 \begin{table}[htbp]
   \centering
   \caption{Performance Comparisons between within-project and cross-project bug localization.}
@@ -71,27 +90,12 @@ For data partition, we use all data from a source project and 20\% data from a t
   \label{tab:results1}%
 \end{table}%
 
-
 \begin{figure}[hbt]
 \centering
 \includegraphics[width = 0.9\columnwidth]{pic/results1_avg.pdf}
 \caption{Performance comparisons between within-project and cross-project bug localization.}
 \label{fig:results1}
 \end{figure}
-
-
-\textbf{RQ1}: \textit{Is there a need for cross-project bug localization?}
-
-To answer this research question, we compare the results of using NP-CNN for bug localization in different settings.
-
-\begin{itemize}
-  \item NP-CNN: Directly employs NP-CNN for cross-project bug localization, which means directly training the model on the data from a source project and locating the bugs in a target project.
-  \item NP-CNN$^{partial}$: Employs NP-CNN using partial data of a target project, which means training based on a partial data (20\%) from the target project, and localizing buggy files without using data from a source project.
-  \item NP-CNN$^{full}$: Employs NP-CNN using full data of a target project. In this setting, we conduct a 5-fold cross-validation for comparison.
-\end{itemize}
-
-The results are detailed in Table~\ref{tab:results1} and Figure~\ref{fig:results1}. There are six tasks in the table.%, in which $\textbf{H}$ represents project \textit{HTTPClient}, $\textbf{J}$ represents project \textit{Jackrabbit} and $\textbf{L}$ represents \textit{Lucene-Java}. 
-The task $\textbf{H} \rightarrow \textbf{J}$ represents using \textit{HTTPClient} as source project and predicts the location of buggy files in \textit{Jackrabbit}. The results show that the performance of bug localization using full data of the target project is the best and has a large gap against the performance of using only a partial data. For cross-project bug localization, the performance of NP-CNN that directly uses a source project is better than NP-CNN$^{partial}$, showing that cross-project data is useful to improve bug localization performance. However, directly using within-project bug localization does not work as well as NP-CNN$^{full}$. These results suggest that there is a need for cross-project bug localization, since directly using within-project bug localization method does not show a good performance.
 
 \textbf{RQ2}: \textit{Do the project-specific prediction layers improve the bug localization performance?}
 
