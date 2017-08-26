@@ -10,7 +10,7 @@ Following prior bug localization studies~\cite{SahaLKP13,SahaLKP14,zhou2012shoul
 \sum_{i} \frac{P(i)\times isBuggy(i)}{\# buggy files}
 \end{equation}
 
-In the above equation, $\mathit{P(i)}$ is the precision at position $i$ (i.e., proportion of files at position 1 to $i$ that are buggy), while $\mathit{isBuggy(i)}$ is 1 if the file at position $i$ is buggy and 0 otherwise. The denominator of the equation is the number of buggy files in the entire ranked list. MAP is the mean of the APs considering all bug reports.
+In the above equation, $\mathit{P(i)}$ is the precision at position $i$ (i.e., proportion of files at position 1 to $i$ that are buggy), while $\mathit{isBuggy(i)}$ is 1 if the file at position $i$ is buggy and 0 otherwise. The denominator of the equation is the number of buggy files in the entire ranked list. MAP is the mean of APs considering all bug reports.
 
-\vspace{0.2cm}\noindent{\bf Mean Reciprocal Rank (MRR).} For each ranked list produced by a bug localization technique for a bug report, we can compute the position of the first file that is buggy. The reciprocal of such position is referred to as the reciprocal rank (RR). MRR is the mean of the RRs considering all bug reports.
+\vspace{0.2cm}\noindent{\bf Mean Reciprocal Rank (MRR).} For each ranked list produced by a bug localization technique for a bug report, we can compute the position of the first buggy file. The reciprocal of such position is referred to as the reciprocal rank (RR). MRR is the mean of RRs considering all bug reports.
 

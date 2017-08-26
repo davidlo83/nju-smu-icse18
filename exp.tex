@@ -11,23 +11,23 @@ To evaluate the effectiveness of \TRANPCNN, we conduct experiments on open sourc
 
 \subsection{Baselines}
 
-We compare our proposed model \TRANPCNN with following baseline methods:
+We compare our proposed model \TRANPCNN with the following baseline methods:
 \begin{itemize}
-  \item VSM (Vector Space Model)~\cite{rao2011retrieval}: a baseline method that firstly uses Vector Space Model to represent the text bug reports and source code, then employs Logistic Regression to predict the related buggy source code.
-  \item Burak (Burak Filter)~\cite{peters2013better}: a state-of-the-art method for cross-project and cross-company defect prediction problem, which filters training sets using Burak filter that employs k-nearest neighbour to selects instances in the source project similar to the test project.
-  \item TCA+ (Transfer Component Analysis)~\cite{NamPK13}: a state-of-the-art transfer learning method in software engineering, which firstly normalizes the data and employs TCA to map source and target project into a same feature space and then apply Logistic Regression for bug localization (same settings suggested in their paper). 
-  \item TCA+$^{(P)}$ (Transfer Component Analysis with multi-layer Perceptron): a state-of-the-art transfer learning method in software engineering, which firstly normalizes the data and employs TCA to map source and target project into a same feature space and then apply MLPs for bug localization (same settings with fully-connected layers in \TRANPCNN).
-   \item TCA+$^{(D)}$ (Transfer Component Analysis with Deep features): a state-of-the-art transfer learning method in software engineering, which firstly normalizes the data and employs TCA to map source and target project into a same feature space and then apply Logistic Regression for bug localization (using deep features extracted from CNN instead of VSM features).
-  \item NP-CNN (Natural and Programming language Convolutional Neural Network)~\cite{huo2016learning}: a state-of-the-art deep model for bug localization, which uses source project data for training a deep convolutional neural network and localizes the buggy source code for target project data.
+  \item VSM (Vector Space Model)~\cite{rao2011retrieval}: a baseline method that first uses a Vector Space Model to represent textual contents of bug reports and source code, and then employs Logistic Regression to predict buggy source code when given a new bug report.
+  \item Burak (Burak Filter)~\cite{peters2013better}: a state-of-the-art method for cross-project and cross-company defect prediction problem. It filters training sets using Burak filter by employing $k$-nearest neighbour algorithm to select instances in the source project that are most similar to instances in the test project.
+  \item TCA+ (Transfer Component Analysis)~\cite{NamPK13}: a state-of-the-art transfer learning method in software engineering, which first normalizes the training sets and employs TCA to map source and target project into a single feature space and then applies Logistic Regression for bug localization (same settings suggested in their paper). 
+  \item TCA+$^{(P)}$ (Transfer Component Analysis with Multi-Layer Perceptron (MLP)): a state-of-the-art transfer learning method in software engineering, which first normalizes training sets and employs TCA to map source and target project into a single feature space and then applies MLPs for bug localization~(same settings with fully-connected layers in \TRANPCNN).
+   \item TCA+$^{(D)}$ (Transfer Component Analysis with Deep features): a state-of-the-art transfer learning method in software engineering, which first normalizes training sets and employs TCA to map source and target project into a single feature space and then applies Logistic Regression for bug localization (using deep features extracted from CNN instead of VSM features).
+  \item NP-CNN (Natural and Programming language Convolutional Neural Network)~\cite{huo2016learning}: a state-of-the-art deep model for bug localization, which uses a source project for training a deep CNN to localize buggy source code in the target project.
 \end{itemize}
 %\ft{Settings would probably better be grouped in experimental settings section. There is no citation for TCA. }
 
 \subsection{Experimental Settings}
-First, the parameter settings of baseline methods (VSM, burak, TCA+, TCA+$^{(P)}$, TCA+$^{(D)}$), we use the same parameters settings suggested in their work~\cite{rao2011retrieval}\cite{NamPK13}. The parameters are set the same in~\cite{huo2016learning}. 
+For the parameters of baseline methods (VSM, Burak, TCA+, TCA+$^{(P)}$, TCA+$^{(D)}$, NP-CNN), we use the same parameter settings suggested in their work~\cite{rao2011retrieval,NamPK13,huo2016learning}. 
 
-For the \TRANPCNN model, we employ the most commonly used ReLU $\sigma(x)=\max(0,x)$ as active function and the filter windows size $d$ is set as 3, 4, 5, with 100 feature maps each in Within-Project feature extraction layers. The number of neurons in fully-connect network in  set the same number of CNN. In addition, the drop-out method is also applied which is used to prevent co-adaption of hidden units by randomly dropping out values in fully-connected layers, and the drop-out probability $p$ is set 0.25 in our experiments.
+For the \TRANPCNN model, we employ the most commonly used ReLU $\sigma(x)=\max(0,x)$ as the activation function and the filter windows size $d$ is set to 3, 4, 5, with 100 feature maps each in within-project feature extraction layers. The number of neurons in fully-connected network is set the same as the number of neurons in CNN. In addition, a drop-out method is also applied to prevent co-adaption of hidden units by randomly dropping out values in fully-connected layers. The drop-out probability $p$ is set to 0.25.
 
-For data partition, we use data from source projects and 20\% target projects as training sets, and locates the 80\% buggy code in target projects. This process repeats for 5 times to reduce the influence of randomness, and we report the average results for comparison. 
+For data partition, we use all data from a source project and 20\% data from a target project as training sets, and locate buggy codes in 80\% remaining data from the target project. This process is repeated five times to reduce the effect of randomness. We report the average results for comparison. 
 
 \section{Experimental Results}
 
