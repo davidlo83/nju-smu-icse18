@@ -150,7 +150,7 @@ To answer this research question, we compare the results of \TRANPCNN with state
 
 %\ft{We should directly use abbreviations of baseline names since they have been introduced in Baselines section. Explanations about baselines are also redundant. }
 
-According to the results, we have several findings: 1. Burak and TCA techniques perform better than the baseline VSM model, indicating that using transfer algorithms is able to improve the performance in cross-project bug localization; 2. \TRANPCNN outperforms TCA-P, which shows that the high-level features extracted from CNN are more semantic and informative, leading to a better representation and bug localization performance; 3. TCA-D uses deep features extracted from CNN and the performance is not as well as \TRANPCNN, which further proves that the cross-project feature fusion layers improve bug localization performance; 4. \TRANPCNN obtains the best average values in terms of all evaluation metrics. Comparing to the best baseline TCA+$^{(D)}$, \TRANPCNN improves the results by 24.6\% in terms of Top-1, by 22.6\% in terms of Top-5, by 20.9\% in terms of Top-10, by 21.9\% in terms of MAP and by 17.2\% in terms of MRR. According to Mann-Whitney U-test, we find \TRANPCNN significant better in terms of all metrics. The results suggest that \TRANPCNN outperforms other traditional bug localization methods and transfer techniques on software engineering.
+According to the results, we have several findings: 1. Burak and TCA techniques perform better than the baseline VSM model, indicating that using transfer algorithms is able to improve the performance in cross-project bug localization; 2. \TRANPCNN outperforms TCA+$^{(P)}$, which shows that the high-level features extracted from CNN are more semantic and informative, leading to a better representation and bug localization performance; 3. TCA+$^{(D)}$ uses deep features extracted from CNN and the performance is not as well as \TRANPCNN, which further proves that the cross-project feature fusion layers improve bug localization performance; 4. \TRANPCNN obtains the best average values in terms of all evaluation metrics. Comparing to the best baseline TCA+$^{(D)}$, \TRANPCNN improves the results by 24.6\% in terms of Top-1, by 22.6\% in terms of Top-5, by 20.9\% in terms of Top-10, by 21.9\% in terms of MAP and by 17.2\% in terms of MRR. According to Mann-Whitney U-test, we find \TRANPCNN significant better in terms of all metrics. The results suggest that \TRANPCNN outperforms other traditional bug localization methods and transfer techniques on software engineering.
 
 %\ft{We can highlight the amount of improvement that \TRANPCNN achieves as compared to the best baseline.}
 
@@ -164,44 +164,44 @@ According to the results, we have several findings: 1. Burak and TCA techniques 
     \midrule
     \multirow{6}[0]{*}{\textbf{J}$\rightarrow$\textbf{H}} & VSM   & 0.098  & 0.157  & 0.177  & 0.087  & 0.143  \\
           & Burak & 0.110  & 0.126  & 0.138  & 0.116  & 0.121  \\
-          & TCA-R & 0.120  & 0.212  & 0.144  & 0.157  & 0.162  \\
-          & TCA-P & 0.114  & 0.133  & 0.154  & 0.123  & 0.176  \\
-          & TCA-D & 0.122  & 0.225  & 0.271  & 0.168  & 0.248  \\
+          & TCA+ & 0.120  & 0.212  & 0.144  & 0.157  & 0.162  \\
+          & TCA+$\{(P)\}$ & 0.114  & 0.133  & 0.154  & 0.123  & 0.176  \\
+          & TCA+$\{(D)\}$ & 0.122  & 0.225  & 0.271  & 0.168  & 0.248  \\
           & \TRANPCNN & \textbf{0.500}  & \textbf{0.583}  & \textbf{0.625}  & \textbf{0.376}  & \textbf{0.543}  \\
           \midrule
     \multirow{6}[0]{*}{\textbf{L}$\rightarrow$\textbf{H}} & VSM   & 0.059  & 0.098  & 0.237  & 0.099  & 0.112  \\
           & Burak & 0.113  & 0.203  & 0.242  & 0.143  & 0.143  \\
-          & TCA-R & 0.120  & 0.188  & 0.244  & 0.151  & 0.158  \\
-          & TCA-P & 0.128  & 0.200  & 0.252  & 0.161  & 0.167  \\
-          & TCA-D & 0.102  & 0.237  & 0.367  & 0.161  & 0.202  \\
+          & TCA+ & 0.120  & 0.188  & 0.244  & 0.151  & 0.158  \\
+          & TCA+$\{(P)\}$ & 0.128  & 0.200  & 0.252  & 0.161  & 0.167  \\
+          & TCA+$\{(D)\}$ & 0.102  & 0.237  & 0.367  & 0.161  & 0.202  \\
           & \TRANPCNN & \textbf{0.275}  & \textbf{0.350}  & \textbf{0.488}  & \textbf{0.242}  & \textbf{ 0.332}  \\
           \midrule
     \multirow{6}[0]{*}{\textbf{H}$\rightarrow$\textbf{J}} & VSM   & 0.035  & 0.211  & 0.232  & 0.165  & 0.129  \\
           & Burak & 0.130  & 0.150  & 0.206  & 0.225  & 0.195  \\
-          & TCA-R & 0.115  & 0.162  & 0.209  & 0.239  & 0.244  \\
-          & TCA-P & 0.114  & 0.154  & 0.203  & 0.237  & 0.241  \\
-          & TCA-D & 0.111  & 0.135  & 0.157  & 0.168  & 0.185  \\
+          & TCA+ & 0.115  & 0.162  & 0.209  & 0.239  & 0.244  \\
+          & TCA+$\{(P)\}$ & 0.114  & 0.154  & 0.203  & 0.237  & 0.241  \\
+          & TCA+$\{(D)\}$ & 0.111  & 0.135  & 0.157  & 0.168  & 0.185  \\
           & \TRANPCNN & \textbf{0.396}  & \textbf{0.443}  & \textbf{0.514}  & \textbf{0.371}  & \textbf{0.434}  \\
           \midrule
     \multirow{6}[0]{*}{\textbf{L}$\rightarrow$\textbf{J}} & VSM   & 0.197  & 0.212  & 0.293  & 0.167  & 0.216  \\
           & Burak & 0.161  & 0.132  & 0.368  & 0.170  & 0.187  \\
-          & TCA-R & 0.136  & 0.183  & 0.370  & 0.170  & 0.179  \\
-          & TCA-P & 0.114  & 0.116  & 0.397  & 0.138  & 0.191  \\
-          & TCA-D & 0.178  & 0.236  & 0.469  & 0.227  & 0.256  \\
+          & TCA+ & 0.136  & 0.183  & 0.370  & 0.170  & 0.179  \\
+          & TCA+$\{(P)\}$ & 0.114  & 0.116  & 0.397  & 0.138  & 0.191  \\
+          & TCA+$\{(D)\}$ & 0.178  & 0.236  & 0.469  & 0.227  & 0.256  \\
           & \TRANPCNN & \textbf{0.460}  & \textbf{0.462}  & \textbf{0.488}  & \textbf{0.404}  & \textbf{0.478}  \\
           \midrule
     \multirow{6}[0]{*}{\textbf{H}$\rightarrow$\textbf{L}} & VSM   & 0.083  & 0.278  & 0.393  & 0.154  & 0.136  \\
           & Burak & 0.105  & 0.226  & 0.272  & 0.123  & 0.222  \\
-          & TCA-R & 0.136  & 0.208  & 0.383  & 0.170  & 0.279  \\
-          & TCA-P & 0.143  & 0.226  & 0.394  & 0.171  & 0.288  \\
-          & TCA-D & 0.162  & 0.207  & 0.345  & 0.229  & 0.292  \\
+          & TCA+ & 0.136  & 0.208  & 0.383  & 0.170  & 0.279  \\
+          & TCA+$\{(P)\}$ & 0.143  & 0.226  & 0.394  & 0.171  & 0.288  \\
+          & TCA+$\{(D)\}$ & 0.162  & 0.207  & 0.345  & 0.229  & 0.292  \\
           & \TRANPCNN & \textbf{0.361}  & \textbf{0.445}  & \textbf{0.535}  & \textbf{0.279}  & \textbf{0.414}  \\
           \midrule
     \multirow{6}[0]{*}{\textbf{J}$\rightarrow$\textbf{L}} & VSM   & 0.038  & 0.077  & 0.154  & 0.124  & 0.204  \\
           & Burak & 0.138  & 0.161  & 0.176  & 0.168  & 0.226  \\
-          & TCA-R & 0.135  & 0.111  & 0.172  & 0.169  & 0.222  \\
-          & TCA-P & 0.136  & 0.132  & 0.192  & 0.173  & 0.237  \\
-          & TCA-D & 0.142  & 0.297  & 0.308  & 0.238  & 0.293  \\
+          & TCA+ & 0.135  & 0.111  & 0.172  & 0.169  & 0.222  \\
+          & TCA+$\{(P)\}$ & 0.136  & 0.132  & 0.192  & 0.173  & 0.237  \\
+          & TCA+$\{(D)\}$ & 0.142  & 0.297  & 0.308  & 0.238  & 0.293  \\
           & \TRANPCNN & \textbf{0.301}  & \textbf{0.410}  & \textbf{0.517}  & \textbf{0.247}  & \textbf{0.368}  \\
 
           \bottomrule
