@@ -11,23 +11,23 @@ To evaluate the effectiveness of \TRANPCNN, we conduct experiments on open sourc
 
 \subsection{Baselines}
 
-We compare our proposed model \TRANPCNN with following baseline methods:
+We compare our proposed model \TRANPCNN with the following baseline methods:
 \begin{itemize}
-  \item VSM (Vector Space Model)~\cite{rao2011retrieval}: a baseline method that firstly uses Vector Space Model to represent the text bug reports and source code, then employs Logistic Regression to predict the related buggy source code.
-  \item Burak (Burak Filter)~\cite{peters2013better}: a state-of-the-art method for cross-project and cross-company defect prediction problem, which filters training sets using Burak filter that employs k-nearest neighbour to selects instances in the source project similar to the test project.
-  \item TCA+ (Transfer Component Analysis)~\cite{NamPK13}: a state-of-the-art transfer learning method in software engineering, which firstly normalizes the data and employs TCA to map source and target project into a same feature space and then apply Logistic Regression for bug localization (same settings suggested in their paper). 
-  \item TCA+$^{(P)}$ (Transfer Component Analysis with multi-layer Perceptron): a state-of-the-art transfer learning method in software engineering, which firstly normalizes the data and employs TCA to map source and target project into a same feature space and then apply MLPs for bug localization (same settings with fully-connected layers in \TRANPCNN).
-   \item TCA+$^{(D)}$ (Transfer Component Analysis with Deep features): a state-of-the-art transfer learning method in software engineering, which firstly normalizes the data and employs TCA to map source and target project into a same feature space and then apply Logistic Regression for bug localization (using deep features extracted from CNN instead of VSM features).
-  \item NP-CNN (Natural and Programming language Convolutional Neural Network)~\cite{huo2016learning}: a state-of-the-art deep model for bug localization, which uses source project data for training a deep convolutional neural network and localizes the buggy source code for target project data.
+  \item VSM (Vector Space Model)~\cite{rao2011retrieval}: a baseline method that first uses a Vector Space Model to represent textual contents of bug reports and source code, and then employs Logistic Regression to predict buggy source code when given a new bug report.
+  \item Burak (Burak Filter)~\cite{peters2013better}: a state-of-the-art method for cross-project and cross-company defect prediction problem. It filters training sets using Burak filter by employing $k$-nearest neighbour algorithm to select instances in the source project that are most similar to instances in the test project.
+  \item TCA+ (Transfer Component Analysis)~\cite{NamPK13}: a state-of-the-art transfer learning method in software engineering, which first normalizes the training sets and employs TCA to map source and target project into a single feature space and then applies Logistic Regression for bug localization (same settings suggested in their paper). 
+  \item TCA+$^P$ (Transfer Component Analysis with Multi-Layer Perceptron (MLP)): a state-of-the-art transfer learning method in software engineering, which first normalizes training sets and employs TCA to map source and target project into a single feature space and then applies MLPs for bug localization~(same settings with fully-connected layers in \TRANPCNN).
+   \item TCA+$^D$ (Transfer Component Analysis with Deep features): a state-of-the-art transfer learning method in software engineering, which first normalizes training sets and employs TCA to map source and target project into a single feature space and then applies Logistic Regression for bug localization (using deep features extracted from CNN instead of VSM features).
+  %\item NP-CNN (Natural and Programming language Convolutional Neural Network)~\cite{huo2016learning}: a state-of-the-art deep model for bug localization, which uses a source project for training a deep CNN to localize buggy source code in the target project.
 \end{itemize}
 %\ft{Settings would probably better be grouped in experimental settings section. There is no citation for TCA. }
 
 \subsection{Experimental Settings}
-First, the parameter settings of baseline methods (VSM, burak, TCA+, TCA+$^{(P)}$, TCA+$^{(D)}$), we use the same parameters settings suggested in their work~\cite{rao2011retrieval}\cite{NamPK13}. The parameters are set the same in~\cite{huo2016learning}. 
+For the parameters of baseline methods (VSM, Burak, TCA+, TCA+$^{(P)}$, TCA+$^{(D)}$), we use the same parameter settings suggested in their work~\cite{rao2011retrieval,NamPK13}. For NP-CNN, we also use the parameter settings suggested in its paper~\cite{huo2016learning}.
 
-For the \TRANPCNN model, we employ the most commonly used ReLU $\sigma(x)=\max(0,x)$ as active function and the filter windows size $d$ is set as 3, 4, 5, with 100 feature maps each in Within-Project feature extraction layers. The number of neurons in fully-connect network in  set the same number of CNN. In addition, the drop-out method is also applied which is used to prevent co-adaption of hidden units by randomly dropping out values in fully-connected layers, and the drop-out probability $p$ is set 0.25 in our experiments.
+For the \TRANPCNN model, we employ the most commonly used ReLU $\sigma(x)=\max(0,x)$ as the activation function and the filter windows size $d$ is set to 3, 4, 5, with 100 feature maps each in within-project feature extraction layers. The number of neurons in fully-connected network is set the same as the number of neurons in CNN. In addition, a drop-out method is also applied to prevent co-adaption of hidden units by randomly dropping out values in fully-connected layers. The drop-out probability $p$ is set to 0.25.
 
-For data partition, we use data from source projects and 20\% target projects as training sets, and locates the 80\% buggy code in target projects. This process repeats for 5 times to reduce the influence of randomness, and we report the average results for comparison. 
+For data partition, we use all data from a source project and 20\% data from a target project as training sets, and locate buggy codes in 80\% remaining data from the target project. This process is repeated five times to reduce the effect of randomness. We then report the average results for comparison. 
 
 \section{Experimental Results}
 
@@ -41,29 +41,29 @@ For data partition, we use data from source projects and 20\% target projects as
     \toprule
     Tasks & \textit{Methods} & \multicolumn{1}{l}{\textit{Top 1}} & \multicolumn{1}{l}{\textit{Top 5}} & \multicolumn{1}{l}{\textit{Top 10}} & \multicolumn{1}{l}{\textit{MAP}} & \multicolumn{1}{l}{\textit{MRR}} \\
     \midrule
-    \multirow{3}[0]{*}{\textbf{J}$\rightarrow$\textbf{H}} & NPCNN & 0.317  & 0.362  & 0.508  & 0.276  & 0.352  \\
-          & NPCNN$^{partial}$ & 0.204  & 0.258  & 0.313  & 0.202  & 0.292  \\
-          & NPCNN$^{full}$ & \textbf{0.533}  & \textbf{0.617}  & \textbf{0.650}  & \textbf{0.472}  & \textbf{0.580}  \\
+    \multirow{3}[0]{*}{\textbf{J}$\rightarrow$\textbf{H}} & NP-CNN & 0.317  & 0.362  & 0.508  & 0.276  & 0.352  \\
+          & NP-CNN$^{partial}$ & 0.204  & 0.258  & 0.313  & 0.202  & 0.292  \\
+          & NP-CNN$^{full}$ & \textbf{0.533}  & \textbf{0.617}  & \textbf{0.650}  & \textbf{0.472}  & \textbf{0.580}  \\
           \midrule
-    \multirow{3}[0]{*}{\textbf{L}$\rightarrow$\textbf{H}} & NPCNN & 0.142  & 0.192  & 0.345  & 0.161  & 0.218  \\
-          & NPCNN$^{partial}$ & 0.204  & 0.258  & 0.313  & 0.202  & 0.292  \\
-          & NPCNN$^{full}$ & \textbf{0.533}  & \textbf{0.617}  & \textbf{0.650}  & \textbf{0.472}  & \textbf{0.580}  \\
+    \multirow{3}[0]{*}{\textbf{L}$\rightarrow$\textbf{H}} & NP-CNN & 0.142  & 0.192  & 0.345  & 0.161  & 0.218  \\
+          & NP-CNN$^{partial}$ & 0.204  & 0.258  & 0.313  & 0.202  & 0.292  \\
+          & NP-CNN$^{full}$ & \textbf{0.533}  & \textbf{0.617}  & \textbf{0.650}  & \textbf{0.472}  & \textbf{0.580}  \\
           \midrule
-    \multirow{3}[0]{*}{\textbf{H}$\rightarrow$\textbf{J}} & NPCNN & 0.167  & 0.287  & 0.349  & 0.247  & 0.277  \\
-          & NPCNN$^{partial}$ & 0.035  & 0.211  & 0.302  & 0.155  & 0.189  \\
-          & NPCNN$^{full}$ & \textbf{0.508}  & \textbf{0.587}  & \textbf{0.679}  & \textbf{0.462}  & \textbf{0.557}  \\
+    \multirow{3}[0]{*}{\textbf{H}$\rightarrow$\textbf{J}} & NP-CNN & 0.167  & 0.287  & 0.349  & 0.247  & 0.277  \\
+          & NP-CNN$^{partial}$ & 0.035  & 0.211  & 0.302  & 0.155  & 0.189  \\
+          & NP-CNN$^{full}$ & \textbf{0.508}  & \textbf{0.587}  & \textbf{0.679}  & \textbf{0.462}  & \textbf{0.557}  \\
           \midrule
-    \multirow{3}[0]{*}{\textbf{L}$\rightarrow$\textbf{J}} & NPCNN & 0.152  & 0.182  & 0.318  & 0.176  & 0.221  \\
-          & NPCNN$^{partial}$ & 0.035  & 0.211  & 0.302  & 0.155  & 0.189  \\
-          & NPCNN$^{full}$ & \textbf{0.508}  & \textbf{0.587}  & \textbf{0.679}  & \textbf{0.462}  & \textbf{0.557}  \\
+    \multirow{3}[0]{*}{\textbf{L}$\rightarrow$\textbf{J}} & NP-CNN & 0.152  & 0.182  & 0.318  & 0.176  & 0.221  \\
+          & NP-CNN$^{partial}$ & 0.035  & 0.211  & 0.302  & 0.155  & 0.189  \\
+          & NP-CNN$^{full}$ & \textbf{0.508}  & \textbf{0.587}  & \textbf{0.679}  & \textbf{0.462}  & \textbf{0.557}  \\
           \midrule
-    \multirow{3}[0]{*}{\textbf{H}$\rightarrow$\textbf{L}} & NPCNN & 0.173  & 0.246  & 0.390  & 0.196  & 0.329  \\
-          & NPCNN$^{partial}$ & 0.097  & 0.219  & 0.335  & 0.095  & 0.109  \\
-          & NPCNN$^{full}$ & \textbf{0.289}  & \textbf{0.484}  & 0.611  & \textbf{0.287}  & \textbf{0.387}  \\
+    \multirow{3}[0]{*}{\textbf{H}$\rightarrow$\textbf{L}} & NP-CNN & 0.173  & 0.246  & 0.390  & 0.196  & 0.329  \\
+          & NP-CNN$^{partial}$ & 0.097  & 0.219  & 0.335  & 0.095  & 0.109  \\
+          & NP-CNN$^{full}$ & \textbf{0.289}  & \textbf{0.484}  & 0.611  & \textbf{0.287}  & \textbf{0.387}  \\
           \midrule
-    \multirow{3}[0]{*}{\textbf{J}$\rightarrow$\textbf{L}} & NPCNN & 0.110  & 0.255  & 0.323  & 0.141  & 0.176  \\
-          & NPCNN$^{partial}$ & 0.097  & 0.219  & 0.335  & 0.095  & 0.109  \\
-          & NPCNN$^{full}$ & \textbf{0.289}  & \textbf{0.484}  & \textbf{0.611}  & \textbf{0.287}  & \textbf{0.387}  \\
+    \multirow{3}[0]{*}{\textbf{J}$\rightarrow$\textbf{L}} & NP-CNN & 0.110  & 0.255  & 0.323  & 0.141  & 0.176  \\
+          & NP-CNN$^{partial}$ & 0.097  & 0.219  & 0.335  & 0.095  & 0.109  \\
+          & NP-CNN$^{full}$ & \textbf{0.289}  & \textbf{0.484}  & \textbf{0.611}  & \textbf{0.287}  & \textbf{0.387}  \\
           \bottomrule
     \end{tabular}%
     }
@@ -85,16 +85,17 @@ For data partition, we use data from source projects and 20\% target projects as
 To answer this research question, we compare the results of using NP-CNN for bug localization in different settings.
 
 \begin{itemize}
-  \item NPCNN: Employ NPCNN directly for cross-project bug localization, which means directly training the model on the data from source projects and locating the bugs in the target project.
-  \item NPCNN$^{partial}$: Employ NPCNN using partial data of target projects, which means training based on a few data (20\%) in the target projects, and localizes target buggy files without using data from source project.
-  \item NPCNN$^{full}$: Employ NPCNN using full data of target projects. In this setting, we conduct 5-folds cross-validation for comparison.
+  \item NP-CNN: Directly employs NP-CNN for cross-project bug localization, which means directly training the model on the data from a source project and locating the bugs in a target project.
+  \item NP-CNN$^{partial}$: Employs NP-CNN using partial data of a target project, which means training based on a partial data (20\%) from the target project, and localizing buggy files without using data from a source project.
+  \item NP-CNN$^{full}$: Employs NP-CNN using full data of a target project. In this setting, we conduct a 5-fold cross-validation for comparison.
 \end{itemize}
 
-The results are detailed in Table.~\ref{tab:results1} and Figuire.~\ref{fig:results1}. There are six tasks in the table, in which $\textbf{H}$ represents project \textit{HTTPClient}, $\textbf{J}$ represents project \textit{Jackrabbit} and $\textbf{L}$ represents \textit{Lucene-Java}. Meanwhile, the task $\textbf{H} \rightarrow \textbf{J}$ represents using \textit{HTTPClient} as source project and predicts the location of buggy files in target project \textit{Jackrabbit}. The results show that the performance of bug localization using full data of target projects is the best, which has a large gap against the performance using partial data. For cross-project bug localization, the performance of NPCNN that directly uses source projects is better than NPCNN$^{partial}$, showing that cross-project data is beneficial to improve the bug localization performance, but directly using within-project bug localization technique will not as well as NPCNN$^{full}$. The results suggest that there is a need for cross-project bug localization, and directly using within-project bug localization method does not show good performance.
+The results are detailed in Table~\ref{tab:results1} and Figure~\ref{fig:results1}. There are six tasks in the table.%, in which $\textbf{H}$ represents project \textit{HTTPClient}, $\textbf{J}$ represents project \textit{Jackrabbit} and $\textbf{L}$ represents \textit{Lucene-Java}. 
+The task $\textbf{H} \rightarrow \textbf{J}$ represents using \textit{HTTPClient} as source project and predicts the location of buggy files in \textit{Jackrabbit}. The results show that the performance of bug localization using full data of the target project is the best and has a large gap against the performance of using only a partial data. For cross-project bug localization, the performance of NP-CNN that directly uses a source project is better than NP-CNN$^{partial}$, showing that cross-project data is useful to improve bug localization performance. However, directly using within-project bug localization does not work as well as NP-CNN$^{full}$. These results suggest that there is a need for cross-project bug localization, since directly using within-project bug localization method does not show a good performance.
 
-\textbf{RQ2}: \textit{Does the project-specific prediction layer improve the bug localization performance?}
+\textbf{RQ2}: \textit{Do the project-specific prediction layers improve the bug localization performance?}
 
-To answer this research question, we compare the results of \TRANPCNN with the original NPCNN. The difference of the structure between \TRANPCNN and NPCNN is that \TRANPCNN employs two fully-connected networks to combine deep features from source projects and target projects in the project-specific prediction layer, respectively, which will counter the influences that cross-project data may have different distribution leading to a bias performance. The results are detailed in Tab.~\ref{tab:results2}.
+To answer this research question, we compare the results of \TRANPCNN with NP-CNN. The structural difference between \TRANPCNN and NP-CNN is on the two fully-connected networks in \TRANPCNN that combine deep features from source and target project (i.e., project-specific prediction layer), which counter the influences of cross-project data that may have different distribution and leads to a bias in performance. The results are detailed in Table~\ref{tab:results2}.
 
 %\ft{It would be good if we can explain why such structure can counter bias. Perhaps we should explain this first in approach (theory) and then highlight it again accompanied with experimental result (empirical).}
 
@@ -106,27 +107,27 @@ To answer this research question, we compare the results of \TRANPCNN with the o
     \toprule
     Tasks & \textit{Methods} & \textit{Top 1} & \textit{Top 5} & \textit{Top 10} & \textit{MAP} & \textit{MRR} \\
     \midrule
-    \multirow{2}[0]{*}{\textbf{J}$\rightarrow$\textbf{H}} & NPCNN & 0.317  & 0.362  & 0.508  & 0.276  & 0.352  \\
+    \multirow{2}[0]{*}{\textbf{J}$\rightarrow$\textbf{H}} & NP-CNN & 0.317  & 0.362  & 0.508  & 0.276  & 0.352  \\
 %          & SimpleTrans & 0.354 & 0.396 & 0.563 & 0.298 & 0.395 \\
           & \TRANPCNN & \textbf{0.500}   & \textbf{0.583} & \textbf{0.625} & \textbf{0.376} & \textbf{0.543} \\
           \midrule
-    \multirow{2}[0]{*}{\textbf{L}$\rightarrow$\textbf{H}} & NPCNN & 0.142  & 0.192  & 0.345  & 0.161  & 0.218  \\
+    \multirow{2}[0]{*}{\textbf{L}$\rightarrow$\textbf{H}} & NP-CNN & 0.142  & 0.192  & 0.345  & 0.161  & 0.218  \\
 %          & SimpleTrans & 0.163 & 0.146 & 0.354 & 0.141 & 0.246 \\
           & \TRANPCNN & \textbf{0.275} & \textbf{0.35}  & \textbf{0.488} & \textbf{0.242} & \textbf{0.332} \\
           \midrule
-    \multirow{2}[0]{*}{\textbf{H}$\rightarrow$\textbf{J}} & NPCNN & 0.167  & 0.287  & 0.349  & 0.247  & 0.277  \\
+    \multirow{2}[0]{*}{\textbf{H}$\rightarrow$\textbf{J}} & NP-CNN & 0.167  & 0.287  & 0.349  & 0.247  & 0.277  \\
 %          & SimpleTrans & 0.133 & 0.324 & 0.365 & 0.273 & 0.301 \\
           & \TRANPCNN & \textbf{0.396} & \textbf{0.443} & \textbf{0.514} & \textbf{0.371} & \textbf{0.434} \\
           \midrule
-    \multirow{2}[0]{*}{\textbf{L}$\rightarrow$\textbf{J}} & NPCNN & 0.152  & 0.182  & 0.318  & 0.176  & 0.221  \\
+    \multirow{2}[0]{*}{\textbf{L}$\rightarrow$\textbf{J}} & NP-CNN & 0.152  & 0.182  & 0.318  & 0.176  & 0.221  \\
 %          & SimpleTrans & 0.144 & 0.204 & 0.382 & 0.247 & 0.249 \\
           & \TRANPCNN & \textbf{0.460}  & \textbf{0.462} & \textbf{0.488} & \textbf{0.404} & \textbf{0.478} \\
           \midrule
-    \multirow{2}[0]{*}{\textbf{H}$\rightarrow$\textbf{L}} & NPCNN & 0.173  & 0.246  & 0.390  & 0.196  & 0.329  \\
+    \multirow{2}[0]{*}{\textbf{H}$\rightarrow$\textbf{L}} & NP-CNN & 0.173  & 0.246  & 0.390  & 0.196  & 0.329  \\
 %          & SimpleTrans & 0.197 & 0.323 & 0.426 & 0.152 & 0.313 \\
           & \TRANPCNN & \textbf{0.361} & \textbf{0.445} & \textbf{0.535} & \textbf{0.279} & \textbf{0.414} \\
           \midrule
-    \multirow{2}[0]{*}{\textbf{J}$\rightarrow$\textbf{L}} & NPCNN & 0.110  & 0.255  & 0.323  & 0.141  & 0.176  \\
+    \multirow{2}[0]{*}{\textbf{J}$\rightarrow$\textbf{L}} & NP-CNN & 0.110  & 0.255  & 0.323  & 0.141  & 0.176  \\
 %          & SimpleTrans & 0.140  & 0.282 & 0.342 & 0.163 & 0.224 \\
           & \TRANPCNN & \textbf{0.301} & \textbf{0.410}  & \textbf{0.517} & \textbf{0.247} & \textbf{0.368} \\
           \bottomrule
@@ -142,15 +143,16 @@ To answer this research question, we compare the results of \TRANPCNN with the o
 \label{fig:results2}
 \end{figure}
 
-The results show that \TRANPCNN performs better than NP-CNN, which suggests that the project-specific prediction layer can improve the performance of cross-projects bug localization. It is because the project-specific prediction layer employ two separate fully-connected network to learn the prediction function for each project separately to encounter the bias of data distribution and the results have provided the evidences.  
+The results show that \TRANPCNN performs better than NP-CNN, which suggest that the project-specific prediction layer can improve the performance of cross-project bug localization. This layer employs two fully-connected networks to learn a separate prediction function for source and target project. This structure helps to combat bias in data distribution, as evidenced by the higher performance of \TRANPCNN as compared to NP-CNN.  
 
 \textbf{RQ3}: \textit{Can \TRANPCNN outperform other bug localization methods?}
 
-To answer this research question, we compare the results of \TRANPCNN with state-of-the-art methods: VSM, Burak, TCA+, TCA+$^(P)$. VSM is a baseline technique used in the within-project bug localization and we employ it on cross-project bug localization for comparison. Burak and TCA+ have been shown good performance on cross-project and cross-company defect prediction, and also we apply it on cross-project bug localization. The parameters of VSM and Burak Filter are set suggested in their work. For fair comparison with TCA+, we use same normalization strategy and the classifier in their original paper (Logistic Regression) and multi-layer perception (same as \TRANPCNN) are compared in our experiments. The results are detailed in Tab.~\ref{tab:results3}. 
+To answer this research question, we compare the results of \TRANPCNN with state-of-the-art methods: VSM, Burak, TCA+, TCA+$^P$, and TCA+$^D$. %VSM is a baseline technique used in a within-project bug localization and we employ it on cross-project bug localization. Burak and TCA+ have been shown to have a good performance on cross-project and cross-company defect prediction. We adopt them for cross-project bug localization. For fair comparison with TCA+, we use same normalization strategy and classifier in their original paper (Logistic Regression) and MLP (same as \TRANPCNN). 
+The results are detailed in Table~\ref{tab:results3}. 
 
 %\ft{We should directly use abbreviations of baseline names since they have been introduced in Baselines section. Explanations about baselines are also redundant. }
 
-According to the results, we have several findings: 1. Burak and TCA techniques perform better than the baseline VSM model, indicating that using transfer algorithms is able to improve the performance in cross-project bug localization; 2. \TRANPCNN outperforms TCA-P, which shows that the high-level features extracted from CNN are more semantic and informative, leading to a better representation and bug localization performance; 3. TCA-D uses deep features extracted from CNN and the performance is not as well as \TRANPCNN, which further proves that the cross-project feature fusion layers improve bug localization performance; 4. \TRANPCNN obtains the best average values in terms of all evaluation metrics. Comparing to the best baseline TCA+$^{(D)}$, \TRANPCNN improves the results by 24.6\% in terms of Top-1, by 22.6\% in terms of Top-5, by 20.9\% in terms of Top-10, by 21.9\% in terms of MAP and by 17.2\% in terms of MRR. According to Mann-Whitney U-test, we find \TRANPCNN significant better in terms of all metrics. The results suggest that \TRANPCNN outperforms other traditional bug localization methods and transfer techniques on software engineering.
+According to the results, we have several findings: 1.) Burak and TCA techniques perform better than VSM, indicating that transfer learning algorithms can improve the performance of cross-project bug localization; 2.) \TRANPCNN outperforms TCA+$^P$, which shows that the high-level features extracted from CNN are more informative, providing a better representation that leads to better bug localization performance; 3.) TCA+$^D$ uses deep features extracted from CNN and the performance is not as well as \TRANPCNN, which further proves that the project-specific prediction layer improves bug localization performance; 4.) \TRANPCNN obtains the best average values in terms of all evaluation metrics. Comparing to the best baseline TCA+$^{D}$, \TRANPCNN improves the results by 24.6\%, 22.6\%, 20.9\%, 21.9\%, and 17.2\% in terms of Top-1, Top-2, Top-5, MAP, and MRR, respectively. According to Mann-Whitney U-test, we find that \TRANPCNN is significantly better in terms of all evaluation metrics. The results suggest that \TRANPCNN outperforms other traditional bug localization methods and transfer learning techniques in software engineering.
 
 %\ft{We can highlight the amount of improvement that \TRANPCNN achieves as compared to the best baseline.}
 
@@ -164,44 +166,44 @@ According to the results, we have several findings: 1. Burak and TCA techniques 
     \midrule
     \multirow{6}[0]{*}{\textbf{J}$\rightarrow$\textbf{H}} & VSM   & 0.098  & 0.157  & 0.177  & 0.087  & 0.143  \\
           & Burak & 0.110  & 0.126  & 0.138  & 0.116  & 0.121  \\
-          & TCA-R & 0.120  & 0.212  & 0.144  & 0.157  & 0.162  \\
-          & TCA-P & 0.114  & 0.133  & 0.154  & 0.123  & 0.176  \\
-          & TCA-D & 0.122  & 0.225  & 0.271  & 0.168  & 0.248  \\
+          & TCA+ & 0.120  & 0.212  & 0.144  & 0.157  & 0.162  \\
+          & TCA+$^P$ & 0.114  & 0.133  & 0.154  & 0.123  & 0.176  \\
+          & TCA+$^D$ & 0.122  & 0.225  & 0.271  & 0.168  & 0.248  \\
           & \TRANPCNN & \textbf{0.500}  & \textbf{0.583}  & \textbf{0.625}  & \textbf{0.376}  & \textbf{0.543}  \\
           \midrule
     \multirow{6}[0]{*}{\textbf{L}$\rightarrow$\textbf{H}} & VSM   & 0.059  & 0.098  & 0.237  & 0.099  & 0.112  \\
           & Burak & 0.113  & 0.203  & 0.242  & 0.143  & 0.143  \\
-          & TCA-R & 0.120  & 0.188  & 0.244  & 0.151  & 0.158  \\
-          & TCA-P & 0.128  & 0.200  & 0.252  & 0.161  & 0.167  \\
-          & TCA-D & 0.102  & 0.237  & 0.367  & 0.161  & 0.202  \\
+          & TCA+ & 0.120  & 0.188  & 0.244  & 0.151  & 0.158  \\
+          & TCA+$^P$ & 0.128  & 0.200  & 0.252  & 0.161  & 0.167  \\
+          & TCA+$^D$ & 0.102  & 0.237  & 0.367  & 0.161  & 0.202  \\
           & \TRANPCNN & \textbf{0.275}  & \textbf{0.350}  & \textbf{0.488}  & \textbf{0.242}  & \textbf{ 0.332}  \\
           \midrule
     \multirow{6}[0]{*}{\textbf{H}$\rightarrow$\textbf{J}} & VSM   & 0.035  & 0.211  & 0.232  & 0.165  & 0.129  \\
           & Burak & 0.130  & 0.150  & 0.206  & 0.225  & 0.195  \\
-          & TCA-R & 0.115  & 0.162  & 0.209  & 0.239  & 0.244  \\
-          & TCA-P & 0.114  & 0.154  & 0.203  & 0.237  & 0.241  \\
-          & TCA-D & 0.111  & 0.135  & 0.157  & 0.168  & 0.185  \\
+          & TCA+ & 0.115  & 0.162  & 0.209  & 0.239  & 0.244  \\
+          & TCA+$^P$ & 0.114  & 0.154  & 0.203  & 0.237  & 0.241  \\
+          & TCA+$^D$ & 0.111  & 0.135  & 0.157  & 0.168  & 0.185  \\
           & \TRANPCNN & \textbf{0.396}  & \textbf{0.443}  & \textbf{0.514}  & \textbf{0.371}  & \textbf{0.434}  \\
           \midrule
     \multirow{6}[0]{*}{\textbf{L}$\rightarrow$\textbf{J}} & VSM   & 0.197  & 0.212  & 0.293  & 0.167  & 0.216  \\
           & Burak & 0.161  & 0.132  & 0.368  & 0.170  & 0.187  \\
-          & TCA-R & 0.136  & 0.183  & 0.370  & 0.170  & 0.179  \\
-          & TCA-P & 0.114  & 0.116  & 0.397  & 0.138  & 0.191  \\
-          & TCA-D & 0.178  & 0.236  & 0.469  & 0.227  & 0.256  \\
+          & TCA+ & 0.136  & 0.183  & 0.370  & 0.170  & 0.179  \\
+          & TCA+$^P$ & 0.114  & 0.116  & 0.397  & 0.138  & 0.191  \\
+          & TCA+$^D$ & 0.178  & 0.236  & 0.469  & 0.227  & 0.256  \\
           & \TRANPCNN & \textbf{0.460}  & \textbf{0.462}  & \textbf{0.488}  & \textbf{0.404}  & \textbf{0.478}  \\
           \midrule
     \multirow{6}[0]{*}{\textbf{H}$\rightarrow$\textbf{L}} & VSM   & 0.083  & 0.278  & 0.393  & 0.154  & 0.136  \\
           & Burak & 0.105  & 0.226  & 0.272  & 0.123  & 0.222  \\
-          & TCA-R & 0.136  & 0.208  & 0.383  & 0.170  & 0.279  \\
-          & TCA-P & 0.143  & 0.226  & 0.394  & 0.171  & 0.288  \\
-          & TCA-D & 0.162  & 0.207  & 0.345  & 0.229  & 0.292  \\
+          & TCA+ & 0.136  & 0.208  & 0.383  & 0.170  & 0.279  \\
+          & TCA+$^P$ & 0.143  & 0.226  & 0.394  & 0.171  & 0.288  \\
+          & TCA+$^D$ & 0.162  & 0.207  & 0.345  & 0.229  & 0.292  \\
           & \TRANPCNN & \textbf{0.361}  & \textbf{0.445}  & \textbf{0.535}  & \textbf{0.279}  & \textbf{0.414}  \\
           \midrule
     \multirow{6}[0]{*}{\textbf{J}$\rightarrow$\textbf{L}} & VSM   & 0.038  & 0.077  & 0.154  & 0.124  & 0.204  \\
           & Burak & 0.138  & 0.161  & 0.176  & 0.168  & 0.226  \\
-          & TCA-R & 0.135  & 0.111  & 0.172  & 0.169  & 0.222  \\
-          & TCA-P & 0.136  & 0.132  & 0.192  & 0.173  & 0.237  \\
-          & TCA-D & 0.142  & 0.297  & 0.308  & 0.238  & 0.293  \\
+          & TCA+ & 0.135  & 0.111  & 0.172  & 0.169  & 0.222  \\
+          & TCA+$^P$ & 0.136  & 0.132  & 0.192  & 0.173  & 0.237  \\
+          & TCA+$^D$ & 0.142  & 0.297  & 0.308  & 0.238  & 0.293  \\
           & \TRANPCNN & \textbf{0.301}  & \textbf{0.410}  & \textbf{0.517}  & \textbf{0.247}  & \textbf{0.368}  \\
 
           \bottomrule
