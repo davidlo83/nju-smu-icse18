@@ -16,7 +16,7 @@ We realize the aforementioned idea by proposing a novel deep transfer neural net
 
 Note that each prediction function are jointly learned with the shared transferable latent feature representation, and thus, the learning of the prediction function for either the source project or the target project is eventually beneficial for learning of the transferable features.  By employing such learning strategy, \TRANPCNN can simultaneously leverage (1) the sufficiently large amount of well-localized data from the source project to help learning better transferable latent features, and (2) the limited number of well-localized data from the target project to adapt the shared transferable features for effective bug localization for the target project. In such a way,  data insufficiency issue in the target project is mitigated by leveraging sufficient number of localized bug reports in the source project.  % ******** Added
 
-\ml{David and Ferdian, please help to read this part to see whether you have got the idea of learning prediction function for the source project.}
+%\ml{David and Ferdian, please help to read this part to see whether you have got the idea of learning prediction function for the source project.}
 
 
 
@@ -31,7 +31,7 @@ The model structure of \TRANPCNN is depicted in Figure~\ref{fig:structure}, wher
 
 \TRANPCNN consists of four layers: input layer, transferable feature extraction layer, project-specific correlation fitting layer and output layer. The input layer takes bug reports as well as the source code files in their original formats and generate their corresponding encodings such that they can be further processed by the subsequent layers of \TRANPCNN. The transferable feature extraction layer aims to learn an intermediate latent feature representation from the bug reports and source code files shared by source and target projects.  The project-specific prediction layer is responsible for biasing learning, based on the transferable feature representation learned in the previous layer, to identify project-specific correlation patterns between bug reports and source code files in source and target projects. The output layer generates the final correlation scores for report-file pairs (i.e., pairs of bug reports and source code files). It is obvious that the the transferable feature extraction layers and project-specific prediction layer layer are the key parts of the proposed model, which would be explained in details in the following subsections. %******* Edited a little bit by Ming
 
-\ml{Now we use ``project-specific prediction layer". But sometimes, prediction is the final output, and here we in fact output the predicted correlation scores. Other alternative here maybe ``project-specific correlation identification layer" or ``project specific localization generation layer''. Which one do you think is better?}
+%\ml{Now we use ``project-specific prediction layer". But sometimes, prediction is the final output, and here we in fact output the predicted correlation scores. Other alternative here maybe ``project-specific correlation identification layer" or ``project specific localization generation layer''. Which one do you think is better?}
 
 To train \TRANPCNN model, pairs of bug reports and source code files from the source and target projects along with their ground truth labels (i.e., correlated or not) are fed into the proposed deep model in order to learn the transferable latent feature representation shared by both source and target projects as well as the project-specific prediction functions for the source and target project, respectively. After the model is fully trained, prediction function $f^{t}$ would be used for determine the correlation of each report-file pair $(r_i^t, c_j^t)$ from the target project.
 
@@ -56,8 +56,8 @@ However, since the source project and target projects may differ in the way how 
 
 Specifically, we utilize two fully-connected networks sharing the same input from the transferable feature extraction layer, namely FCN$^s$ and FCN$^t$, to learn the correlation patterns between the bug report and the source code files for both source and target projects, based on which the final prediction of correlation score is generated in the proceeding output layer. As mentioned before, learning the correlation patterns for the source project can leverage the rich supervision of the localized report-file pairs in the source project in helping the learning good transferable features, which can be conceptually regarded as pushing the useful knowledge for localizing bugs from the source project down to the transferable latent features and transferred to the target project when learning correlation patterns for the target project based on the shared latent features. 
 
-\dl{Why do we want simultaneously learn two prediction functions? Why not just learn for target project? I'm not fully sure here ...}
-\ml{Hopefully the previous paragraph addresses david's conerns.}
+%\dl{Why do we want simultaneously learn two prediction functions? Why not just learn for target project? I'm not fully sure here ...}
+%\ml{Hopefully the previous paragraph addresses david's conerns.}
 
 To jointly learn the project-specific correlation patterns for each project along with the transferable latent features, we propose the a hybrid loss function that simultaneously fulfill the learning objectives for both source and target projects. 
 
@@ -70,8 +70,8 @@ To jointly learn the project-specific correlation patterns for each project alon
 
 %The key challenge here is how to simultaneously learn two prediction functions capturing the correlation patterns in different project based on the same set of features within the same model structure. To address this challenge, we construct two fully connected neural network substructures, namely $fc^s$ and $fc^t$, for the subsequent project-specific correlation fitting layers, where $fc^s$ and $fc^t$ share the same input unit and have different output units. Such a special design facilitates the model to take the same set of transferable features from both bug reports and source code files and fit to correlation pattern of the report-code pair in the source project and target project, respectively, with different substructures $fc^s$ and $fc^t$.
 
-\dl{The following phrase is unclear to me: fit to correlation pattern of the report-code pair in the source project and target project, respectively, with different substructures $fc^s$ and $fc^t$.}
-\dl{I'm not sure how to fit network substructures to correlation patterns? Do we mean we use the substructures to *learn* different correlation patterns?}
+%\dl{The following phrase is unclear to me: fit to correlation pattern of the report-code pair in the source project and target project, respectively, with different substructures $fc^s$ and $fc^t$.}
+%\dl{I'm not sure how to fit network substructures to correlation patterns? Do we mean we use the substructures to *learn* different correlation patterns?}
 
 
 \begin{equation}
